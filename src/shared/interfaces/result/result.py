@@ -16,7 +16,7 @@ class ISuccessProcess(ABC,Generic[T]):
         pass
     
     @abstractmethod
-    def success(self):
+    def success(self) -> bool:
         pass
 
 class IFailureProcess(ABC,Generic[T]):
