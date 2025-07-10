@@ -1,11 +1,11 @@
 from fastapi import APIRouter
 
-route =  APIRouter(prefix='users',tags=['users'])
+route =  APIRouter(prefix='/user',tags=['users'])
 
 def moduleRouterUser () -> APIRouter:
     
-    @route.get('/user')
+    @route.get('/')
     def getUser():
-        return { }
+        return {'message':'esta listo la ruta de user' }
     
     return route
