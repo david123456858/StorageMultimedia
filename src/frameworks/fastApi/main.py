@@ -11,7 +11,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(routesUser.route, prefix='/api',tags=['users'])
+app.include_router(routesUser.moduleRouterUser(), prefix='/api',tags=['users'])
 
 @app.get('/ping')
 def get_health():
