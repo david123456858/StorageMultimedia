@@ -2,6 +2,7 @@ fastapi[all]
 uvicorn
 python-dotenv
 sqlalchemy
+sqlalchemy-libsql
 pymysql
 dotenv
-gunicorn
+gunicorn 
