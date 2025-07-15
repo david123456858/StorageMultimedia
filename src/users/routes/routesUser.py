@@ -14,4 +14,4 @@ def moduleRouterUser () -> APIRouter:
     @route.get('/auth/login')
     def getAuth():
         return{'message':' ruta de autenticación'}
-    return route
+    return route 

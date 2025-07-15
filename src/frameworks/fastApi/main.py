@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.users.routes import routesUser
+from src.images.routes import images
 from src.config.db.db import engine, Base
 
 app = FastAPI()
@@ -18,6 +19,7 @@ Base.metadata.create_all(bind=engine)
 
 ## apartado de rutas
 app.include_router(routesUser.moduleRouterUser(), prefix='/api',tags=['users'])
+app.include_router(images.routeImages(), prefix='/api',tags=['Images'])
 
 @app.get('/ping')
 def get_health():
