@@ -1,16 +1,31 @@
-# from sqlalchemy import create_engine
-# import os
-# from dotenv import load_dotenv
-# from sqlalchemy.orm import sessionmaker
-# from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Engine, create_engine
+import os
+from dotenv import load_dotenv
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from typing import Optional
 
-# load_dotenv()
+load_dotenv()
 
+TURSO_DATABASE_URL = os.environ.get('MY_SQL')
+TURSO_DATABASE_TOKEN = os.environ.get('MY_TOKE_SQL')
 
-# DATA_BASE = f'sqlite+{os.getenv('MY_SQL')}?authToken={os.getenv('MY_TOKE_SQL')}'
-
-# engine = create_engine(DATA_BASE)
-# localSession = sessionmaker(autocommit=True, autoflush=True, bind=engine)
-# Base = declarative_base() 
-
-
+class dataBaseTurso:
+    _instance = None
+    _engine: Optional[Engine] = None 
+    
+    @classmethod
+    def get_instance(cls) -> Engine:
+        if cls._engine is None:
+            cls._engine = create_engine(
+                f"sqlite+{TURSO_DATABASE_URL}?secure=true",
+                    connect_args={
+                        "auth_token": TURSO_DATABASE_TOKEN
+                    }
+            )
+        cls._instance = cls()
+        return cls._engine      
+    
+Base = declarative_base() 
+localSession = sessionmaker(autocommit=True, autoflush=True, bind=dataBaseTurso.get_instance())
+        

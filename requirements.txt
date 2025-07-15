@@ -1,8 +1,7 @@
 fastapi[all]
 uvicorn
 python-dotenv
-sqlalchemy
-sqlalchemy-libsql
+libsql-client
 pymysql
 dotenv
 gunicorn 

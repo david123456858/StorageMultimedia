@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.users.routes import routesUser
 from src.images.routes import images
-from src.config.db.db import engine, Base
+from src.config.db.db import dataBaseTurso, Base
 
 app = FastAPI()
 
@@ -14,7 +14,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 ## Creacion de tablas
-Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=dataBaseTurso.get_instance())
 
 
 ## apartado de rutas
