@@ -13,7 +13,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-## Creacion de tablas
+# Creacion de tablas
 Base.metadata.create_all(bind=dataBaseTurso.get_instance())
 
 
