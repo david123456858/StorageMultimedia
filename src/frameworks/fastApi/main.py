@@ -13,9 +13,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 # Creacion de tablas
-#
-# Base.metadata.create_all(bind=dataBaseTurso.get_instance())
+Base.metadata.create_all(bind=dataBaseTurso.get_instance())
 
 
 ## apartado de rutas
@@ -26,8 +26,7 @@ app.include_router(images.routeImages(), prefix='/api',tags=['Images'])
 def get_health():
     return { "message":" pong "}
 
-
-
+#ruta de mi herma y prog steven
 @app.get('/hello')
 def get_hello():
     return{"message":"konichiwa"}

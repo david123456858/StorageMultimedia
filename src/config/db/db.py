@@ -12,7 +12,7 @@ TURSO_DATABASE_TOKEN = os.environ.get('MY_TOKE_SQL')
 
 class dataBaseTurso:
     _instance = None
-    _engine: Optional[Engine] = None 
+    _engine: Optional[Engine] = None
     
     @classmethod
     def get_instance(cls) -> Engine:
@@ -26,9 +26,4 @@ class dataBaseTurso:
         cls._instance = cls()
         return cls._engine      
     
-Base = declarative_base() 
-
-print('konichiwa world')
-
-
-        
+Base = declarative_base()
