@@ -9,12 +9,7 @@ load_dotenv()
 
 TURSO_DATABASE_URL = os.environ.get('MY_SQL')
 TURSO_DATABASE_TOKEN = os.environ.get('MY_TOKE_SQL')
-#*
-# stack =  t
-# turso -> bd
-# libsql-client -> ORM
-# 
-# *#
+
 class dataBaseTurso:
     _instance = None
     _engine: Optional[Engine] = None 
@@ -32,5 +27,8 @@ class dataBaseTurso:
         return cls._engine      
     
 Base = declarative_base() 
+
+
+
 
         

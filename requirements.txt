@@ -5,3 +5,4 @@ libsql-client
 pymysql
 dotenv
 gunicorn 
+sqlalchemy-libsql
