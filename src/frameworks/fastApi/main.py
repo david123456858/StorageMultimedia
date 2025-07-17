@@ -16,6 +16,8 @@ app.add_middleware(
 
 # Creacion de tablas
 Base.metadata.create_all(bind=dataBaseTurso.get_instance())
+# method healt data base 
+dataBaseTurso.test_connection() 
 
 
 ## apartado de rutas
