@@ -28,7 +28,7 @@ class dataBaseTurso:
     
 Base = declarative_base() 
 
-
+print('konichiwa world')
 
 
         
