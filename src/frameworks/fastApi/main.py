@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.users.routes import routesUser
 from src.images.routes import images
 from src.config.db.db import dataBaseTurso, Base
+from src.users.entity.user import User
 
 app = FastAPI()
 
@@ -16,6 +17,7 @@ app.add_middleware(
 
 # Creacion de tablas
 Base.metadata.create_all(bind=dataBaseTurso.get_instance())
+
 # method healt data base 
 dataBaseTurso.test_connection() 
 
