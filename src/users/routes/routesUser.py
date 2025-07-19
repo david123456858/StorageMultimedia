@@ -22,12 +22,12 @@ def moduleRouterUser () -> APIRouter:
     
     
     @route.post('/auth/register')
-    def routeAuthLogin(userLogin:userDtoLogin):
+    def routeAuthLogin(userCreate:userDtoRegiter):
         return controllerUserAuth.createUser(controller)
     
     
-    @route.get('/auth/login')
-    def routeAuthRegister(userCreate:userDtoRegiter):
-        return{'message':f'user Recibido {userCreate}'}
+    @route.post('/auth/login')
+    def routeAuthRegister(userLogin:userDtoLogin):
+        return{'message':f'user Recibido {userLogin}'}
     
     return route 
