@@ -3,6 +3,11 @@ from src.shared.interfaces.result.result import ISuccessProcess, IFailureProcess
 
 
 class SuccessProccess(ISuccessProcess[str]):
+    """Class that show of informations it's procesos
+
+    Args:
+        ISuccessProcess (_type_): Interface with the contratc
+    """
     def __init__(self,value : str,code : int):
         self._success = True 
         self._value = value
@@ -18,6 +23,11 @@ class SuccessProccess(ISuccessProcess[str]):
     
 
 class FailureProccess(IFailureProcess[str]):
+    """class that show of informations it's procesos
+
+    Args:
+        IFailureProcess (_type_): Interface with the contratc
+    """
     def __init__(self,error : str,code : int  ) -> None:
         self._error = error
         self._code = code

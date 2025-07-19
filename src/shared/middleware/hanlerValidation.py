@@ -4,7 +4,7 @@ from fastapi.exceptions import RequestValidationError
 
 
 async def validation_Exception_handler(req:Request,exc:RequestValidationError) -> Response:
-    """Hanler error fot validatios Dto"""
+    """Hanler error for validatios Dto"""
     errors = [
         {
             "field":".".join(map(str,err["loc"][1:])),
