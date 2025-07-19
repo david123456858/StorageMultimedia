@@ -24,7 +24,7 @@ dataBaseTurso.test_connection()
 
 ## apartado de rutas
 app.include_router(routesUser.moduleRouterUser(), prefix='/api',tags=['users'])
-app.include_router(images.routeImages(), prefix='/api',tags=['Images'])
+app.include_router(images.routeImages(), prefix='/api',tags=['images']) 
 
 @app.get('/ping')
 def get_health():

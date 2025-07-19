@@ -3,10 +3,18 @@ from fastapi import APIRouter
 from src.users.controllers.user import controllerUserAuth
 from src.users.caseuse.register import caseUseCreateUser
 from src.users.caseuse.login import caseUseUserLogin
+from src.users.dtos.user import userDtoLogin,userDtoRegiter
+
+
 route =  APIRouter(prefix='/user',tags=['users'])
 
 
-## funcion que carga todas las rutas
+#*
+# this module is the begin in the aplication for part 
+# 
+# 
+# 
+# *#
 def moduleRouterUser () -> APIRouter:
     
     ## injection depends
@@ -17,11 +25,12 @@ def moduleRouterUser () -> APIRouter:
     
     
     @route.post('/auth/register')
-    def getUser():
+    def routeAuthLogin(userLogin:userDtoLogin):
         return controllerUserAuth.createUser(controller)
     
     
     @route.get('/auth/login')
-    def getAuth():
-        return{'message':' ruta de autenticación'}
+    def routeAuthRegister(userCreate:userDtoRegiter):
+        return{'message':f'user Recibido {userCreate}'}
+    
     return route 
