@@ -5,5 +5,6 @@ libsql-client
 sqlalchemy
 pymysql
 dotenv
+cloudinary
 gunicorn 
 sqlalchemy-libsql
