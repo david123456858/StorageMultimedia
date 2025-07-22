@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse, Response
 from fastapi.exceptions import RequestValidationError
 
 
-async def validation_Exception_handler(req:Request,exc:RequestValidationError) -> Response:
+def validation_Exception_handler(req:Request,exc:RequestValidationError) -> Response:
     """Hanler error for validatios Dto"""
     errors = [
         {
