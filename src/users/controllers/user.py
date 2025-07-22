@@ -10,10 +10,7 @@ class controllerUserAuth():
         pass
     
     async def createUser(self,user:userDtoRegiter,caseUse:caseUseCreateUser):
-        result = caseUseCreateUser.createUser(caseUse,user)
-        if (result):
-            return
-        return result
+        return await caseUseCreateUser.createUser(caseUse,user)
     
     async def LoginUser(self):
         result = caseUseUserLogin.createLogin(self.caseUse,"deberia ir dto")
