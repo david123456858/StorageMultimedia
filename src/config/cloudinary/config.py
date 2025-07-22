@@ -9,9 +9,11 @@ CLODINARY_NAME = os.environ.get('CLOUDINARY_NAME')
 CLODINARY_KEY = os.environ.get('API_KEY_CLOUDINARY')
 CLODINARY_SECRECT= os.environ.get('CLOUDINARY_SECRET')
 
-cloudinary.config(
+config = cloudinary.config(
     cloud_name = CLODINARY_NAME, 
     api_key = CLODINARY_KEY, 
     api_secret = CLODINARY_SECRECT,
-    
+    secure=True
 )
+
+print(F"✔ AL PARECER SALIO BIEN {config}")
