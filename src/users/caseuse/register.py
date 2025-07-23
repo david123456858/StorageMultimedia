@@ -2,6 +2,7 @@ from src.users.dtos.user import userDtoRegiter
 from src.shared.utils.result import SuccessProccess,FailureProccess
 from src.users.repository.user import repositoryUser
 from src.users.entity.user import User
+from src.shared.utils.encrypt.hashed import hashing
 
 class caseUseCreateUser():
     def __init__(self,repository:repositoryUser) -> None:
@@ -13,8 +14,8 @@ class caseUseCreateUser():
             user = User(
                 id=userDto.id,
                 name= userDto.name,
-                email= userDto.email,
-                password= userDto.password
+                email= hashing(userDto.email),
+                password= hashing(userDto.password)
                         )
             self.repo.save(user)
             return SuccessProccess(200,'todo salio bien')
