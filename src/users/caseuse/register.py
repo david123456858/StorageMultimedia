@@ -7,7 +7,7 @@ class caseUseCreateUser():
     def __init__(self,repository:repositoryUser) -> None:
         self.repo = repository
         pass
-    
+    ## it´s funtion have the objetive of create the user of the app
     def createUser(self, userDto: userDtoRegiter) :
         try:
             user = User(
@@ -16,7 +16,7 @@ class caseUseCreateUser():
                 email= userDto.email,
                 password= userDto.password
                         )
-            result = self.repo.save(user)
+            self.repo.save(user)
             return SuccessProccess(200,'todo salio bien')
         except Exception as e:
             return FailureProccess(500,'Error internal sever')
