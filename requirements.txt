@@ -8,3 +8,4 @@ dotenv
 cloudinary
 gunicorn 
 sqlalchemy-libsql
+bcrypt
