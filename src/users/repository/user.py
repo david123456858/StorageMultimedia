@@ -8,6 +8,7 @@ class repositoryUser(repositoryCrud[User]):
         repositoryCrud (User): this is class that did CRUD with database
     """
     def save(self, entity: User):
+        
         return super().save(entity)
     
     def update(self, entity: User) -> User:

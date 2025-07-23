@@ -4,7 +4,7 @@ from src.users.controllers.user import controllerUserAuth
 from src.users.caseuse.register import caseUseCreateUser
 from src.users.caseuse.login import caseUseUserLogin
 from src.users.dtos.user import userDtoLogin,userDtoRegiter
-
+from src.users.repository.user import repositoryUser as RepositoryUser
 
 route =  APIRouter(prefix='/user',tags=['users'])
 
@@ -14,8 +14,9 @@ route =  APIRouter(prefix='/user',tags=['users'])
 # *#
 def moduleRouterUser () -> APIRouter:
     
+    repository_user_instance = RepositoryUser() 
     ## injection depends
-    caseUseCreateInstance = caseUseCreateUser()
+    caseUseCreateInstance = caseUseCreateUser(repository_user_instance)
     caseUseLoginInstance = caseUseUserLogin()
     
     controller = controllerUserAuth(caseUseLoginInstance, caseUseCreateInstance)
