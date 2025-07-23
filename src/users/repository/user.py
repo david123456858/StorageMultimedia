@@ -1,5 +1,6 @@
 from src.shared.interfaces.repository.repositoryCrud import repositoryCrud
 from src.users.entity.user import User
+from src.config.db.db import dataBaseTurso
 
 class repositoryUser(repositoryCrud[User]):
     """_summary_
@@ -8,8 +9,12 @@ class repositoryUser(repositoryCrud[User]):
         repositoryCrud (User): this is class that did CRUD with database
     """
     def save(self, entity: User):
+        session = dataBaseTurso._sessionLocal()
+        session.add(entity)
+        session.commit()
+        session.refresh(entity)
+        session.close()
         
-        return super().save(entity)
     
     def update(self, entity: User) -> User:
         return super().update(entity)

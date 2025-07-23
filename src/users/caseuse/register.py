@@ -10,15 +10,15 @@ class caseUseCreateUser():
     
     def createUser(self, userDto: userDtoRegiter) :
         try:
-    
             user = User(
                 id=userDto.id,
                 name= userDto.name,
                 email= userDto.email,
                 password= userDto.password
                         )
+            result = self.repo.save(user)
             
-            print(user)
+            print(result)
             return SuccessProccess(200,'todo salio bien')
         except Exception as e:
             return FailureProccess(500,'Error internal sever')
