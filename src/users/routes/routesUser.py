@@ -8,14 +8,12 @@ from src.users.repository.user import repositoryUser as RepositoryUser
 
 route =  APIRouter(prefix='/user',tags=['users'])
 
-
-#*
 # this module is the begin in the aplication for part 
-# *#
+
 def moduleRouterUser () -> APIRouter:
     
     repository_user_instance = RepositoryUser() 
-    ## injection depends
+    
     caseUseCreateInstance = caseUseCreateUser(repository_user_instance)
     caseUseLoginInstance = caseUseUserLogin()
     
