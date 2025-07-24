@@ -9,3 +9,4 @@ cloudinary
 gunicorn 
 sqlalchemy-libsql
 bcrypt
+cryptography
