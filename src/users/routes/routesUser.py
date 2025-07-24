@@ -15,7 +15,7 @@ def moduleRouterUser () -> APIRouter:
     repository_user_instance = RepositoryUser() 
     
     caseUseCreateInstance = caseUseCreateUser(repository_user_instance)
-    caseUseLoginInstance = caseUseUserLogin()
+    caseUseLoginInstance = caseUseUserLogin(repository_user_instance)
     
     controller = controllerUserAuth(caseUseLoginInstance, caseUseCreateInstance)
     

@@ -11,6 +11,7 @@ class caseUseCreateUser():
     ## it´s funtion have the objetive of create the user of the app
     def createUser(self, userDto: userDtoRegiter) :
         try:
+            
             user = User(
                 id=userDto.id,
                 name= userDto.name,
