@@ -8,7 +8,7 @@ class controllerUserAuth():
     
     def __init__(self,caseUseLogin:caseUseUserLogin, caseUseRegister:caseUseCreateUser) -> None:
         self.caseUse = caseUseLogin
-        self.caseUseRegister = caseUseCreateUser
+        self.caseUseRegister = caseUseRegister
         pass
     
     def createUser(self,user:userDtoRegiter,caseUse:caseUseCreateUser):
@@ -19,6 +19,6 @@ class controllerUserAuth():
         
         return JSONResponse({"message":response['value']},response['statusCode']) 
     
-    def LoginUser(self):
-        result = caseUseUserLogin.createLogin(self.caseUse,"deberia ir dto")
-        return {}
+    def LoginUser(self,user:userDtoLogin,):
+        result = caseUseUserLogin.createLogin(self.caseUse,user)
+        return result
