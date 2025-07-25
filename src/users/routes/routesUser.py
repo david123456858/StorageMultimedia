@@ -27,6 +27,6 @@ def moduleRouterUser () -> APIRouter:
     
     @route.post('/auth/login')
     def routeAuthRegister(userLogin:userDtoLogin):
-        return{'message':f'user Recibido {userLogin}'}
+        return controller.LoginUser(userLogin)  # type: ignore
     
     return route 

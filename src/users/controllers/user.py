@@ -21,4 +21,7 @@ class controllerUserAuth():
     
     def LoginUser(self,user:userDtoLogin,):
         result = self.caseUse.createLogin(user) # type: ignore
-        return result
+        if not result['success']:
+            return JSONResponse({"error":result['error']},result['statusCode'])
+        
+        return JSONResponse({"message":result['value']},result['statusCode'])
