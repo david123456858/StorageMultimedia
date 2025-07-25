@@ -14,8 +14,7 @@ class caseUseCreateUser():
         try:
             
             user = User(
-                id=userDto.id,
-                name= userDto.name,
+                name= encrypt(userDto.name),
                 email= encrypt(userDto.email),
                 password= hashing(userDto.password),
                 emailhash= hashing(userDto.email)
