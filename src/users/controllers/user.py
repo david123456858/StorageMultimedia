@@ -11,8 +11,8 @@ class controllerUserAuth():
         self.caseUseRegister = caseUseRegister
         pass
     
-    def createUser(self,user:userDtoRegiter,caseUse:caseUseCreateUser):
-        response = caseUseCreateUser.createUser(caseUse,user)
+    def createUser(self,user:userDtoRegiter):
+        response = self.caseUseRegister.createUser(user) # type: ignore
         
         if not response['success']:
             return JSONResponse({"error":response['error']},response['statusCode'])
@@ -20,5 +20,5 @@ class controllerUserAuth():
         return JSONResponse({"message":response['value']},response['statusCode']) 
     
     def LoginUser(self,user:userDtoLogin,):
-        result = caseUseUserLogin.createLogin(self.caseUse,user)
+        result = self.caseUse.createLogin(user) # type: ignore
         return result

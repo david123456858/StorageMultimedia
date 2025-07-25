@@ -23,5 +23,6 @@ class caseUseCreateUser():
             self.repo.save(user)
             return SuccessProccess(200,'todo salio bien')
         except Exception as e:
-            return FailureProccess(500,'Error internal sever')
+            print(e)
+            return FailureProccess(500,'Error internal sever') 
     

@@ -22,7 +22,7 @@ def moduleRouterUser () -> APIRouter:
     
     @route.post('/auth/register')
     def routeAuthLogin(userCreate:userDtoRegiter):
-        return controllerUserAuth.createUser(controller,userCreate,caseUseCreateInstance)
+        return controller.createUser(userCreate) # type: ignore
     
     
     @route.post('/auth/login')

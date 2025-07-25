@@ -12,7 +12,7 @@ def SuccessProccess(statusCode:int,value:str):
 def FailureProccess(statusCode:int,error:str):
     response = {
         "error": error,
-        "success": True,
+        "success": False,
         "statusCode": statusCode
     }
     return response
