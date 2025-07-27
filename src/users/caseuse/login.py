@@ -1,15 +1,24 @@
 from src.users.repository.user import repositoryUser
 from src.shared.utils.result import SuccessProccess,FailureProccess
 from src.users.dtos.user import userDtoLogin
+from src.shared.utils.encrypt.encrypt import verify_encrypt
+
 class caseUseUserLogin():
     
     def __init__(self,repository:repositoryUser) -> None:
-        self. repo = repository
+        self.repo = repository
         pass
     def createLogin(self,userDto:userDtoLogin):
         try:
+            user_find = self.repo.find_by_email(userDto.email)
+            password_hash = getattr(user_find,'password',None)
             
-
+            if not isinstance(password_hash, str) or password_hash is None:
+                return FailureProccess(500, 'Contraseña inválida en base de datos')
+            result_verify = verify_encrypt(password_hash, userDto.password)
+            if not result_verify:
+                FailureProccess(401,'Contraseña incorrecta')
+            
             return SuccessProccess(200,'OK')
         except Exception as e:
             return FailureProccess(500,'Error internal sever')

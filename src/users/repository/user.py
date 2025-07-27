@@ -28,5 +28,11 @@ class repositoryUser(repositoryCrud[User]):
     def findById(self, id: str) -> (User | None):
         return self.session.query(User).filter(User.id == id).first()
     
-    def delete(self, id: str):
-        return super().delete(id)
+    def delete(self, id: str)-> User | None:
+        user = self.findById(id)
+        if user:
+            self.session.delete(user)
+        return user    
+    
+    def find_by_email(self,email:str):
+        return self.session.query(User).filter(User.emailhash== email).first()

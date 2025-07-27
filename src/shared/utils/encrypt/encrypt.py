@@ -18,3 +18,11 @@ def encrypt(email: str) -> str:
 
 def decrypt(token: str) -> str:
     return cipher.decrypt(token.encode()).decode()
+
+def verify_encrypt(token:str,password_client:str) -> bool:
+    token_descrypt = decrypt(token)
+    password_client_descrypted = decrypt(password_client)
+    
+    if (token_descrypt != password_client_descrypted):
+        return False
+    return True
