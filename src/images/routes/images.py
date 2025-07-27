@@ -8,6 +8,7 @@ from src.images.dtos.image import ImageDtoCreate, ImageDtoUpdate
 route = APIRouter(prefix='/images', tags=['Images'])
 
 def routeImages() -> APIRouter:
+    
     repository = RepositoryImage()
     case_use = CaseUseImage(repository)
     controller = ControllerImage(case_use)
