@@ -10,6 +10,11 @@ class caseUseUserLogin():
         pass
     def createLogin(self,userDto:userDtoLogin):
         try:
+            #*
+            # getattr(user_find,'password',None)
+            # Obtiene lo que tiene de resultado un objeto en este caso
+            # seria que va a scar user_find.password y lo convertira en un str 
+            # #
             user_find = self.repo.find_by_email(userDto.email)
             password_hash = getattr(user_find,'password',None)
             
