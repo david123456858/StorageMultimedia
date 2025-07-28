@@ -10,11 +10,11 @@ class CaseUseImage:
 
     def create_image(self, dto):
         try:
-            
-        
+
             
             print('Aca llego bien')
         except Exception as e:
+            
             print(e)    
     
     def get_all_images(self):

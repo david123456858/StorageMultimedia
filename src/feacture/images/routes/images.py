@@ -14,9 +14,7 @@ def routeImages() -> APIRouter:
     controller = ControllerImage(case_use)
 
     @route.post('/')
-    async def create_image(image:UploadFile = File(...)):
-        if image is True:
-            print('Llego bien')
+    async def create_image(image:UploadFile = File(title='imagesFile')):
         return controller.create_image(image)
 
     @route.get('/')
