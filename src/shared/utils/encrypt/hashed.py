@@ -1,10 +1,7 @@
-import hashlib
+import bcrypt
 
 def hashing(input:str)-> str:
-    return hashlib.sha256(input.lower().strip().encode()).hexdigest()
+    return bcrypt.hashpw(input.encode(), bcrypt.gensalt()).decode()
 
-def verifyHashed(input:str,hash:str):
-    hash_input = hashing(input)
-    if (hash_input != hash):
-        return False
-    return True
+def verify_password(input_password: str, stored_hash: str) -> bool:
+    return bcrypt.checkpw(input_password.encode(), stored_hash.encode())
