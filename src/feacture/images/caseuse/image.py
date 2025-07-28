@@ -9,7 +9,7 @@ class CaseUseImage:
     def create_image(self, dto: ImageDtoCreate):
         image = Image(name=dto.name, url=dto.url)
         return self.repo.save(image)
-
+    
     def get_all_images(self):
         return self.repo.findAll()
 
