@@ -35,4 +35,4 @@ class repositoryUser(repositoryCrud[User]):
         return user    
     
     def find_by_email(self,email:str):
-        return self.session.query(User).filter(User.emailhash== email).first()
+        return self.session.query(User).filter(User.emailhash == email).first()

@@ -5,7 +5,7 @@ from src.videos.repository.video import RepositoryVideo
 from src.videos.dtos.video import VideoDtoCreate, VideoDtoUpdate
 
 route = APIRouter(prefix='/videos', tags=['Videos'])
-
+ 
 def routeVideos() -> APIRouter:
     repository = RepositoryVideo()
     case_use = CaseUseVideo(repository)

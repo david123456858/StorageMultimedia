@@ -2,13 +2,15 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 
+from src.config.cloudinary.config import config
+from src.shared.utils.encrypt.encrypt import key
+from src.users.entity.user import User
+from src.images.entity.image import Image
+from src.videos.entity.video import Video
 from src.users.routes import routesUser
 from src.images.routes import images
 from src.config.db.db import dataBaseTurso, Base
-from src.users.entity.user import User
 from src.shared.middleware.hanlerValidation import validation_Exception_handler
-from src.config.cloudinary.config import config
-from src.shared.utils.encrypt.encrypt import key
 
 app = FastAPI()
 
