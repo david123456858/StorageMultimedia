@@ -2,13 +2,20 @@ from src.feacture.images.repository.images import RepositoryImage
 from src.feacture.images.dtos.image import ImageDtoCreate, ImageDtoUpdate
 from src.feacture.images.entity.image import Image
 
+
+
 class CaseUseImage:
     def __init__(self, repository: RepositoryImage):
         self.repo = repository
 
-    def create_image(self, dto: ImageDtoCreate):
-        image = Image(name=dto.name, url=dto.url)
-        return self.repo.save(image)
+    def create_image(self, dto):
+        try:
+            
+        
+            
+            print('Aca llego bien')
+        except Exception as e:
+            print(e)    
     
     def get_all_images(self):
         return self.repo.findAll()

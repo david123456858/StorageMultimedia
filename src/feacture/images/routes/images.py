@@ -1,5 +1,5 @@
 
-from fastapi import APIRouter
+from fastapi import APIRouter, File, UploadFile
 from src.feacture.images.controllers.image import ControllerImage
 from src.feacture.images.caseuse.image import CaseUseImage
 from src.feacture.images.repository.images import RepositoryImage
@@ -14,8 +14,10 @@ def routeImages() -> APIRouter:
     controller = ControllerImage(case_use)
 
     @route.post('/')
-    def create_image(dto: ImageDtoCreate):
-        return controller.create_image(dto)
+    async def create_image(image:UploadFile = File(...)):
+        if image is True:
+            print('Llego bien')
+        return controller.create_image(image)
 
     @route.get('/')
     def get_images():

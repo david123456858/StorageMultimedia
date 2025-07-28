@@ -6,9 +6,9 @@ class ControllerImage:
     def __init__(self, case_use: CaseUseImage):
         self.case_use = case_use
 
-    def create_image(self, dto: ImageDtoCreate):
+    def create_image(self, dto):
         result = self.case_use.create_image(dto)
-        return JSONResponse(content={"message": "Imagen creada", "data": result.id}, status_code=201)
+        return JSONResponse(content={"message": "Imagen creada", "data": True}, status_code=201)
 
     def get_all_images(self):
         result = self.case_use.get_all_images()
