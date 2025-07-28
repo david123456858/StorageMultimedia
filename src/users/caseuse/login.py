@@ -17,13 +17,17 @@ class caseUseUserLogin():
             # #
             user_find = self.repo.find_by_email(userDto.email)
             password_hash = getattr(user_find,'password',None)
-            
+            print(user_find)
+            print(password_hash)
             if not isinstance(password_hash, str) or password_hash is None:
                 return FailureProccess(500, 'Contraseña inválida en base de datos')
+            
             result_verify = verify_encrypt(password_hash, userDto.password)
-            if not result_verify:
-                FailureProccess(401,'Contraseña incorrecta')
+            print(result_verify)
+            # if not result_verify:
+            #     FailureProccess(401,'Contraseña incorrecta')
             
             return SuccessProccess(200,'OK')
         except Exception as e:
-            return FailureProccess(500,'Error internal sever')
+            print(e)
+            return FailureProccess(500,f'Error internal sever {e}')

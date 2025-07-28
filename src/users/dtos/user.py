@@ -10,5 +10,5 @@ class userDtoRegiter(BaseModel):
 
 
 class userDtoLogin(BaseModel):
-    email : EmailStr
+    email : str
     password : str

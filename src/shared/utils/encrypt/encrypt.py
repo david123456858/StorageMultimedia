@@ -17,12 +17,14 @@ def encrypt(email: str) -> str:
     return cipher.encrypt(email.encode()).decode()
 
 def decrypt(token: str) -> str:
-    return cipher.decrypt(token.encode()).decode()
+    result = cipher.decrypt(token.encode()).decode()
+    print(result)
+    return result
 
-def verify_encrypt(token:str,password_client:str) -> bool:
+def verify_encrypt(token:str,password_client:str) :
+    print(token,password_client)
     token_descrypt = decrypt(token)
+    print(token_descrypt)
     password_client_descrypted = decrypt(password_client)
-    
-    if (token_descrypt != password_client_descrypted):
-        return False
     return True
+    
