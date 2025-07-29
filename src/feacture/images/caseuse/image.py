@@ -2,6 +2,7 @@ from src.feacture.images.repository.images import RepositoryImage
 from src.feacture.images.dtos.image import ImageDtoCreate, ImageDtoUpdate
 from src.feacture.images.entity.image import Image
 
+import cloudinary.uploader
 
 
 class CaseUseImage:
@@ -10,8 +11,7 @@ class CaseUseImage:
 
     def create_image(self, dto):
         try:
-
-            
+            result_upload = cloudinary.uploader.upload(dto,tags = "shoes")
             print('Aca llego bien')
         except Exception as e:
             
