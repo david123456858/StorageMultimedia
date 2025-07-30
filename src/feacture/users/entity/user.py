@@ -13,3 +13,4 @@ class User(Base):
     password = Column(String(100))
     
     multimedia = relationship('Multimedia',back_populates='user',cascade='all, delete-orphan') 
+   

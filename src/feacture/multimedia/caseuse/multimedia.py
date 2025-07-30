@@ -23,7 +23,7 @@ class CaseUseMultimedia:
             file_byte = await file.read()
             
             result = cloudy.upload(file_byte,resource_type="auto")
-            
+            print(result) 
             multimedia = Multimedia (
                 public_id = result['public_id'],
                 resource_type =  result['resource_type'],
