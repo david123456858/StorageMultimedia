@@ -1,9 +1,8 @@
-
 from datetime import datetime
+from sqlalchemy import Column, Integer, String,Boolean,DateTime,ForeignKey
+from sqlalchemy.orm import relationship
 
 from src.config.db.db import Base
-
-from sqlalchemy import Column, Integer, String,Boolean,DateTime
 
 
 class Multimedia(Base):
@@ -19,3 +18,6 @@ class Multimedia(Base):
     
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow)
+    
+    user_id =   Column(Integer, ForeignKey('users.id'))
+    user = relationship("User", back_populates="multimedia")

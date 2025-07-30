@@ -4,12 +4,13 @@ from src.feacture.multimedia.entity.multimedia import Multimedia
 from src.shared.utils.result import SuccessProccess, FailureProccess
 
 import cloudinary.uploader as cloudy
+from fastapi import UploadFile
 
 class CaseUseMultimedia:
     def __init__(self, repository: RepositoryMultimedia):
         self.repo = repository
 
-    async def create_multimedia(self, file):
+    async def create_multimedia(self, email_client:str ,file:UploadFile):
         try:
             file_byte = await file.read()
             result = cloudy.upload(

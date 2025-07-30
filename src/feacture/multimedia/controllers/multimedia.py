@@ -10,8 +10,8 @@ class ControllerMultimedia:
     def __init__(self, case_use: CaseUseMultimedia):
         self.case_use = case_use
 
-    async def create_multimedia(self, file:UploadFile):
-        response = await self.case_use.create_multimedia(file)
+    async def create_multimedia(self, email_client:str ,file:UploadFile):
+        response = await self.case_use.create_multimedia(email_client,file)
         if not response['success']:
             return JSONResponse({"error":response['error']},response['statusCode'])
         

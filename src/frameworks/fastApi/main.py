@@ -4,13 +4,10 @@ from fastapi.exceptions import RequestValidationError
 
 # part feacture
 from src.feacture.users.entity.user import User
-from src.feacture.images.entity.image import Image
-from src.feacture.videos.entity.video import Video
 from src.feacture.multimedia.entity.multimedia import Multimedia
 
 # part routes
 from src.feacture.users.routes import routesUser
-from src.feacture.images.routes import images
 from src.feacture.multimedia.routes import multimedia 
 
 # part config
@@ -36,8 +33,7 @@ Base.metadata.create_all(bind=dataBaseTurso.get_instance())
 dataBaseTurso.test_connection() 
 
 ## apartado de rutas
-app.include_router(routesUser.moduleRouterUser(), prefix='/api',tags=['users'])
-app.include_router(images.routeImages(), prefix='/api',tags=['images']) 
+app.include_router(routesUser.moduleRouterUser(), prefix='/api',tags=['users']) 
 app.include_router(multimedia.routeMultimedia(), prefix='/api',tags=['Multimedia'])
 
 ## middlerware handler error validation
