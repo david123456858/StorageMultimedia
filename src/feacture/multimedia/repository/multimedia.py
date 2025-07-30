@@ -12,6 +12,7 @@ class RepositoryMultimedia:
         self.session.close()
 
     def update(self, entity: Multimedia):
+        ## este update va a estar barbaro
         return None
 
     def findAll(self):

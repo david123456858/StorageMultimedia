@@ -1,14 +1,21 @@
+from fastapi import UploadFile
+from fastapi.responses import JSONResponse
+
 from src.feacture.multimedia.caseuse.multimedia import CaseUseMultimedia
 from src.feacture.multimedia.dtos.multimedia import MultimediaDtoCreate, MultimediaDtoUpdate
-from fastapi.responses import JSONResponse
+
+
 
 class ControllerMultimedia:
     def __init__(self, case_use: CaseUseMultimedia):
         self.case_use = case_use
 
-    def create_multimedia(self, dto: MultimediaDtoCreate):
-        result = self.case_use.create_multimedia(dto)
-        return JSONResponse(content={"message": "Multimedia creada", "data": result.id}, status_code=201)
+    async def create_multimedia(self, file:UploadFile):
+        response = await self.case_use.create_multimedia(file)
+        if not response['success']:
+            return JSONResponse({"error":response['error']},response['statusCode'])
+        
+        return JSONResponse({"message":response['value']},response['statusCode']) 
 
     def get_all_multimedia(self):
         result = self.case_use.get_all_multimedia()
@@ -26,7 +33,7 @@ class ControllerMultimedia:
             return JSONResponse(content={"error": "Multimedia no encontrada"}, status_code=404)
         return JSONResponse(content={"message": "Multimedia actualizada", "data": result.id}, status_code=200)
 
-    def delete_multimedia(self, id: int):
+    def delete_multimedia(self, id: str):
         result = self.case_use.delete_multimedia(id)
         if not result:
             return JSONResponse(content={"error": "Multimedia no encontrada"}, status_code=404)

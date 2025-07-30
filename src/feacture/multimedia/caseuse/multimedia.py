@@ -1,14 +1,32 @@
 from src.feacture.multimedia.repository.multimedia import RepositoryMultimedia
 from src.feacture.multimedia.dtos.multimedia import MultimediaDtoCreate, MultimediaDtoUpdate
 from src.feacture.multimedia.entity.multimedia import Multimedia
+from src.shared.utils.result import SuccessProccess, FailureProccess
+
+import cloudinary.uploader as cloudy
 
 class CaseUseMultimedia:
     def __init__(self, repository: RepositoryMultimedia):
         self.repo = repository
 
-    def create_multimedia(self, dto: MultimediaDtoCreate):
-        multimedia = Multimedia(id=len(self.repo.data)+1, name=dto.name, url=dto.url, type=dto.type)
-        return self.repo.save(multimedia)
+    async def create_multimedia(self, file):
+        try:
+            file_byte = await file.read()
+            result = cloudy.upload(
+            file_byte,
+            resource_type="auto"
+            )
+            print(result)
+            multimedia = Multimedia (
+                public_id = result['public_id'],
+                resource_type =  result['resource_type']
+            )
+            print(multimedia)
+            self.repo.save(multimedia)
+            return SuccessProccess(200,'multimedia saved sussesfuly')
+        except Exception as e:
+            print(e)
+            return FailureProccess(500,'Error internal server')
 
     def get_all_multimedia(self):
         return self.repo.findAll()
@@ -28,6 +46,6 @@ class CaseUseMultimedia:
             multimedia.type = dto.type
         return self.repo.update(multimedia)
 
-    def delete_multimedia(self, id: int):
-        self.repo.delete(id)
+    def delete_multimedia(self, id: str):
+        print('prueba de ruta')
         return True

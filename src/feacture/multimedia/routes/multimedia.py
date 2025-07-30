@@ -1,8 +1,10 @@
 from fastapi import APIRouter
+from fastapi import File,UploadFile
+
 from src.feacture.multimedia.controllers.multimedia import ControllerMultimedia
 from src.feacture.multimedia.caseuse.multimedia import CaseUseMultimedia
 from src.feacture.multimedia.repository.multimedia import RepositoryMultimedia
-from src.feacture.multimedia.dtos.multimedia import MultimediaDtoCreate, MultimediaDtoUpdate
+from src.feacture.multimedia.dtos.multimedia import MultimediaDtoUpdate
 
 route = APIRouter(prefix='/multimedia', tags=['Multimedia'])
 
@@ -12,8 +14,8 @@ def routeMultimedia() -> APIRouter:
     controller = ControllerMultimedia(case_use)
 
     @route.post('/')
-    def create_multimedia(dto: MultimediaDtoCreate):
-        return controller.create_multimedia(dto)
+    async def create_multimedia(file:UploadFile = File(...)):
+        return await controller.create_multimedia(file)
 
     @route.get('/')
     def get_multimedia():
@@ -28,7 +30,7 @@ def routeMultimedia() -> APIRouter:
         return controller.update_multimedia(id, dto)
 
     @route.delete('/{id}')
-    def delete_multimedia(id: int):
+    def delete_multimedia(id: str):
         return controller.delete_multimedia(id)
 
     return route
