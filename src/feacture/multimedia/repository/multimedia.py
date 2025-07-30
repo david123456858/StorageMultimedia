@@ -1,28 +1,25 @@
 from src.feacture.multimedia.entity.multimedia import Multimedia
+from src.config.db.db import dataBaseTurso
 
 class RepositoryMultimedia:
     def __init__(self):
-        self.data = []  # Simulación de almacenamiento
+        self.session = dataBaseTurso._sessionLocal()
 
     def save(self, entity: Multimedia):
-        self.data.append(entity)
-        return entity
+        self.session.add(entity)
+        self.session.commit()
+        self.session.refresh(entity)
+        self.session.close()
 
     def update(self, entity: Multimedia):
-        for idx, item in enumerate(self.data):
-            if item.id == entity.id:
-                self.data[idx] = entity
-                return entity
         return None
 
     def findAll(self):
-        return self.data
+        return self.session.query(Multimedia).all()
 
     def findById(self, id: int):
-        for item in self.data:
-            if item.id == id:
-                return item
-        return None
+        return self.session.query(Multimedia).filter(Multimedia.id == id).first()
 
-    def delete(self, id: int):
-        self.data = [item for item in self.data if item.id != id]
+    def delete(self, public_id: str):
+        multimedia_find = self.session.query(Multimedia).filter(Multimedia.public_id == public_id)
+        self.session.delete(multimedia_find)
