@@ -1,7 +1,9 @@
 from src.feacture.multimedia.repository.multimedia import RepositoryMultimedia
-from src.feacture.multimedia.dtos.multimedia import MultimediaDtoCreate, MultimediaDtoUpdate
+from src.feacture.multimedia.dtos.multimedia import  MultimediaDtoUpdate
 from src.feacture.multimedia.entity.multimedia import Multimedia
 from src.shared.utils.result import SuccessProccess, FailureProccess
+from src.feacture.users.repository.user import repositoryUser
+from src.shared.utils.encrypt.hashed import hashing_hashlib
 
 import cloudinary.uploader as cloudy
 from fastapi import UploadFile
@@ -9,20 +11,24 @@ from fastapi import UploadFile
 class CaseUseMultimedia:
     def __init__(self, repository: RepositoryMultimedia):
         self.repo = repository
+        self.repoUser = repositoryUser()
 
     async def create_multimedia(self, email_client:str ,file:UploadFile):
         try:
+            
+            user_find = self.repoUser.find_by_email(hashing_hashlib(email_client)) 
+            if not user_find:
+                return FailureProccess(404, 'User Not Found')
+            
             file_byte = await file.read()
-            result = cloudy.upload(
-            file_byte,
-            resource_type="auto"
-            )
-            print(result)
+            
+            result = cloudy.upload(file_byte,resource_type="auto")
+            
             multimedia = Multimedia (
                 public_id = result['public_id'],
-                resource_type =  result['resource_type']
+                resource_type =  result['resource_type'],
+                user_email = user_find.emailhash
             )
-            print(multimedia)
             self.repo.save(multimedia)
             return SuccessProccess(200,'multimedia saved sussesfuly')
         except Exception as e:

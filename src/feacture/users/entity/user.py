@@ -12,4 +12,4 @@ class User(Base):
     emailhash = Column(String(100),unique=True, index=True)
     password = Column(String(100))
     
-    multimedia = relationship('Multimedia',back_populates='user',cascade='all, delete-orphan')
+    multimedia = relationship('Multimedia',back_populates='user',cascade='all, delete-orphan') 
