@@ -26,9 +26,9 @@ def routeMultimedia() -> APIRouter:
     def get_multimedia_by_id(id: int):
         return controller.get_multimedia_by_id(id)
 
-    @route.patch('/{email_client}')
-    def update_multimedia(email_client:EmailStr, dto: MultimediaDtoUpdate):
-        return controller.update_multimedia(email_client, dto)
+    @route.patch('/{public_id}')
+    def update_multimedia(public_id:EmailStr, dto: MultimediaDtoUpdate):
+        return controller.update_multimedia(public_id, dto)
 
     @route.delete('/{id}')
     def delete_multimedia(id: str):

@@ -41,8 +41,12 @@ class CaseUseMultimedia:
     def get_multimedia_by_id(self, id: int):
         return self.repo.findById(id)
 
-    def update_multimedia(self, email_client:str, dto: MultimediaDtoUpdate):
-        return
+    def update_multimedia(self, public_id:str, dto: MultimediaDtoUpdate):
+        try:
+            multimedia = self.repo.find_by_public_id(public_id)
+            return SuccessProccess(200,'ok')
+        except Exception as e:   
+            return FailureProccess(500,'Error internal Server')
 
     def delete_multimedia(self, id: str):
         print('prueba de ruta')

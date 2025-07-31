@@ -24,7 +24,10 @@ class RepositoryMultimedia:
 
     def findById(self, id: int):
         return self.session.query(Multimedia).filter(Multimedia.id == id).first()
-
+    
+    def find_by_public_id(self,public_id:str):
+        return self.session.query(Multimedia).filter(Multimedia.public_id == public_id).first()
+    
     def delete(self, public_id: str):
         multimedia_find = self.session.query(Multimedia).filter(Multimedia.public_id == public_id)
         self.session.delete(multimedia_find)

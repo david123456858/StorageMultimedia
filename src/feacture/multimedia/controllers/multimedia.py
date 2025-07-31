@@ -12,6 +12,7 @@ class ControllerMultimedia:
 
     async def create_multimedia(self, email_client:str ,file:UploadFile):
         response = await self.case_use.create_multimedia(email_client,file)
+        
         if not response['success']:
             return JSONResponse({"error":response['error']},response['statusCode'])
         
@@ -27,11 +28,12 @@ class ControllerMultimedia:
             return JSONResponse(content={"error": "Multimedia no encontrada"}, status_code=404)
         return JSONResponse(content={"data": {"id": result.id, "name": result.name, "url": result.url, "type": result.type}}, status_code=200)
 
-    def update_multimedia(self, email_client:str, dto: MultimediaDtoUpdate):
-        result = self.case_use.update_multimedia(email_client, dto)
-        if not result:
-            return JSONResponse(content={"error": "Multimedia no encontrada"}, status_code=404)
-        return JSONResponse(content={"message": "Multimedia actualizada", "data": result.id}, status_code=200)
+    def update_multimedia(self, public_id:str, dto: MultimediaDtoUpdate):
+        response = self.case_use.update_multimedia(public_id, dto)
+        if not response['success']:
+            return JSONResponse({"error":response['error']},response['statusCode'])
+        
+        return JSONResponse({"message":response['value']},response['statusCode']) 
 
     def delete_multimedia(self, id: str):
         result = self.case_use.delete_multimedia(id)

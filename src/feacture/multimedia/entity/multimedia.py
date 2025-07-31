@@ -11,8 +11,8 @@ class Multimedia(Base):
     """
     __tablename__ = 'multimedia'
     id = Column(Integer, primary_key=True,index=True, autoincrement=True)
-    public_id = Column(String(255),unique=True)
-    resource_type = Column(String(20))    
+    public_id = Column(String(255),unique=True,index=True)
+    resource_type = Column(String(20))
     
     is_favorite = Column(Boolean, default=False)
     is_archived = Column(Boolean, default=False)
