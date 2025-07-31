@@ -1,6 +1,8 @@
 from src.feacture.multimedia.entity.multimedia import Multimedia
 from src.config.db.db import dataBaseTurso
 
+from datetime import timezone,datetime
+
 class RepositoryMultimedia:
     def __init__(self):
         self.session = dataBaseTurso._sessionLocal()
@@ -12,8 +14,9 @@ class RepositoryMultimedia:
         self.session.close()
 
     def update(self, entity: Multimedia):
-        ## este update va a estar barbaro/ ni tanto🤣
-        return None
+        self.session.commit()
+        result = self.session.refresh(entity)
+        return result
 
     def findAll(self):
         return self.session.query(Multimedia).filter(

@@ -32,7 +32,6 @@ class CaseUseMultimedia:
             self.repo.save(multimedia)
             return SuccessProccess(200,'multimedia saved sussesfuly')
         except Exception as e:
-            print(e)
             return FailureProccess(500,'Error internal server')
 
     def get_all_multimedia(self):
@@ -43,7 +42,14 @@ class CaseUseMultimedia:
 
     def update_multimedia(self, public_id:str, dto: MultimediaDtoUpdate):
         try:
+            
+            
+            ## part of database
             multimedia = self.repo.find_by_public_id(public_id)
+            for key , value in dto.model_dump(exclude_none=True).items():
+                setattr(multimedia,key,value)
+                
+            self.repo.update(multimedia)    
             return SuccessProccess(200,'ok')
         except Exception as e:   
             return FailureProccess(500,'Error internal Server')
