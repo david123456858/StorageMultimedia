@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class MultimediaDtoCreate(BaseModel):
     name: str
@@ -6,6 +7,7 @@ class MultimediaDtoCreate(BaseModel):
     type: str
 
 class MultimediaDtoUpdate(BaseModel):
-    name: str | None = None
-    url: str | None = None
-    type: str | None = None
+    is_favorite: Optional[bool] = None
+    is_archived: Optional[bool] = None
+    is_private: Optional[bool] = None
+    is_deleted: Optional[bool] = None

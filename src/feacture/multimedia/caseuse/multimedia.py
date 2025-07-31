@@ -23,7 +23,7 @@ class CaseUseMultimedia:
             file_byte = await file.read()
             
             result = cloudy.upload(file_byte,resource_type="auto")
-            print(result) 
+            
             multimedia = Multimedia (
                 public_id = result['public_id'],
                 resource_type =  result['resource_type'],
@@ -41,17 +41,8 @@ class CaseUseMultimedia:
     def get_multimedia_by_id(self, id: int):
         return self.repo.findById(id)
 
-    def update_multimedia(self, id: int, dto: MultimediaDtoUpdate):
-        multimedia = self.repo.findById(id)
-        if not multimedia:
-            return None
-        if dto.name is not None:
-            multimedia.name = dto.name
-        if dto.url is not None:
-            multimedia.url = dto.url
-        if dto.type is not None:
-            multimedia.type = dto.type
-        return self.repo.update(multimedia)
+    def update_multimedia(self, email_client:str, dto: MultimediaDtoUpdate):
+        return
 
     def delete_multimedia(self, id: str):
         print('prueba de ruta')

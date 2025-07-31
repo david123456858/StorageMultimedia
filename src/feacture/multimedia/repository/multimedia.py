@@ -12,11 +12,15 @@ class RepositoryMultimedia:
         self.session.close()
 
     def update(self, entity: Multimedia):
-        ## este update va a estar barbaro
+        ## este update va a estar barbaro/ ni tanto🤣
         return None
 
     def findAll(self):
-        return self.session.query(Multimedia).all()
+        return self.session.query(Multimedia).filter(
+                Multimedia.is_archived==False,
+                Multimedia.is_deleted==False,
+                Multimedia.is_private==False
+            ).all()
 
     def findById(self, id: int):
         return self.session.query(Multimedia).filter(Multimedia.id == id).first()

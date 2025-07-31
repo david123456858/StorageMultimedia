@@ -27,8 +27,8 @@ class ControllerMultimedia:
             return JSONResponse(content={"error": "Multimedia no encontrada"}, status_code=404)
         return JSONResponse(content={"data": {"id": result.id, "name": result.name, "url": result.url, "type": result.type}}, status_code=200)
 
-    def update_multimedia(self, id: int, dto: MultimediaDtoUpdate):
-        result = self.case_use.update_multimedia(id, dto)
+    def update_multimedia(self, email_client:str, dto: MultimediaDtoUpdate):
+        result = self.case_use.update_multimedia(email_client, dto)
         if not result:
             return JSONResponse(content={"error": "Multimedia no encontrada"}, status_code=404)
         return JSONResponse(content={"message": "Multimedia actualizada", "data": result.id}, status_code=200)
