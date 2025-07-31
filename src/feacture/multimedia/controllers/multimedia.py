@@ -19,8 +19,12 @@ class ControllerMultimedia:
         return JSONResponse({"message":response['value']},response['statusCode']) 
 
     def get_all_multimedia(self):
-        result = self.case_use.get_all_multimedia()
-        return JSONResponse(content={"data": [ {"id": m.id, "name": m.name, "url": m.url, "type": m.type} for m in result ]}, status_code=200)
+        response = self.case_use.get_all_multimedia()
+        
+        if not response['success']:
+            return JSONResponse({"error":response['error']},response['statusCode'])
+        
+        return JSONResponse({"message":response['value']},response['statusCode']) 
 
     def get_multimedia_by_id(self, id: int):
         result = self.case_use.get_multimedia_by_id(id)

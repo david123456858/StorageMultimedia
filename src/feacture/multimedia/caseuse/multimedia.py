@@ -35,14 +35,21 @@ class CaseUseMultimedia:
             return FailureProccess(500,'Error internal server')
 
     def get_all_multimedia(self):
-        return self.repo.findAll()
+        try:
+            result = self.repo.findAll()
+            for value in result:
+                print(result[value])
+                
+            return SuccessProccess(200,f'{result}')
+        except Exception as e : 
+            return FailureProccess(500,'') 
 
     def get_multimedia_by_id(self, id: int):
         return self.repo.findById(id)
 
     def update_multimedia(self, public_id:str, dto: MultimediaDtoUpdate):
         try:
-            
+            ## part of clodinary
             
             ## part of database
             multimedia = self.repo.find_by_public_id(public_id)
