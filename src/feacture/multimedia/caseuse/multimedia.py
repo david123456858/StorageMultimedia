@@ -5,7 +5,9 @@ from src.shared.utils.result import SuccessProccess, FailureProccess
 from src.feacture.users.repository.user import repositoryUser
 from src.shared.utils.encrypt.hashed import hashing_hashlib
 
-import cloudinary.uploader as cloudy
+
+from cloudinary.uploader import upload , destroy
+from cloudinary.utils import cloudinary_url
 from fastapi import UploadFile
 
 class CaseUseMultimedia:
@@ -25,7 +27,7 @@ class CaseUseMultimedia:
             
             file_byte = await file.read()
             
-            result = cloudy.upload(file_byte,resource_type="auto")
+            result = upload(file_byte,resource_type="auto")
             
             multimedia = Multimedia (
                 public_id = result['public_id'],
@@ -41,12 +43,31 @@ class CaseUseMultimedia:
         try:
             result = self.repo.find_paginated(hashing_hashlib(email_client), page ,size_page)
             
+            data = []
             for value in result:
-                print(result[value])
+                url,_ = cloudinary_url(value.public_id, resource_type=value.resource_type)
+                thumbail_url,_ = cloudinary_url(
+                    value.public_id,
+                    resource_type=value.resource_type,
+                    transformation=[
+                        {'width': 300, 'height': 300, 'crop': 'fill'},
+                        {'quality': 'auto'},
+                        {'format': 'auto'}
+                    ]
+                )
                 
-            return SuccessProccess(200,f'{result}')
+                data.append({
+                    'id': value.id,
+                    'public_id': value.public_id,
+                    'resource_type': value.resource_type,
+                    'created_at': value.created_at,
+                    'url': url,
+                    'thumbnail_url': thumbail_url
+                })
+                
+            return SuccessProccess(200,data)
         except Exception as e : 
-            return FailureProccess(500,'') 
+            return FailureProccess(500,'Error internal server') 
 
     def get_multimedia_by_id(self, id: int):
         return self.repo.findById(id)
@@ -65,6 +86,15 @@ class CaseUseMultimedia:
         except Exception as e:   
             return FailureProccess(500,'Error internal Server')
 
-    def delete_multimedia(self, id: str):
-        print('prueba de ruta')
-        return True
+    def delete_multimedia(self, public_id: str):
+        try:
+            multimedia_find =  self.repo.find_by_public_id(public_id)
+            if not multimedia_find :
+                return FailureProccess(404,'resource of multimedia don´t find')
+            
+            detroy_image = destroy(public_id)
+            
+            self.repo.update(multimedia_find)
+            return SuccessProccess(200,'')
+        except Exception as e:
+            return FailureProccess(500,'')
