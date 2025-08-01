@@ -19,7 +19,7 @@ def routeMultimedia() -> APIRouter:
         return await controller.create_multimedia(email_client,file)
 
     @route.get('/')
-    def get_multimedia(email_client:EmailStr,page:int,size_page):
+    def get_multimedia(email_client:EmailStr,page:int,size_page:int):
         return controller.get_all_multimedia(email_client,page,size_page)
 
     @route.get('/{id}')

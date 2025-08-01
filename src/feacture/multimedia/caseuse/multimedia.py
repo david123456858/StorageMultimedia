@@ -39,7 +39,8 @@ class CaseUseMultimedia:
 
     def get_all_multimedia(self,email_client:str,page:int,size_page:int):
         try:
-            result = self.repo.findAll()
+            result = self.repo.find_paginated(hashing_hashlib(email_client), page ,size_page)
+            
             for value in result:
                 print(result[value])
                 
