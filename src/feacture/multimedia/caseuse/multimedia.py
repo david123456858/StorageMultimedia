@@ -54,13 +54,13 @@ class CaseUseMultimedia:
                         {'quality': 'auto'},
                         {'format': 'auto'}
                     ]
-                )
+                ) 
                 
                 data.append({
                     'id': value.id,
                     'public_id': value.public_id,
                     'resource_type': value.resource_type,
-                    'created_at': value.created_at,
+                    'created_at': value.created_at.isoformat() ,##lo convierte en string el datatime
                     'url': url,
                     'thumbnail_url': thumbail_url
                 })
@@ -90,7 +90,7 @@ class CaseUseMultimedia:
         try:
             multimedia_find =  self.repo.find_by_public_id(public_id)
             if not multimedia_find :
-                return FailureProccess(404,'resource of multimedia don´t find')
+                return FailureProccess(404,'resource of multimedia dont find')
             
             detroy_image = destroy(public_id)
             

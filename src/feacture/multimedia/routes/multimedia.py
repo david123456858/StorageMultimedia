@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from fastapi import File,UploadFile
+from fastapi import File,UploadFile,Form
 from pydantic import EmailStr
 
 from src.feacture.multimedia.controllers.multimedia import ControllerMultimedia
@@ -15,7 +15,7 @@ def routeMultimedia() -> APIRouter:
     controller = ControllerMultimedia(case_use)
 
     @route.post('/')
-    async def create_multimedia(email_client:EmailStr, file:UploadFile = File(...)):
+    async def create_multimedia(email_client:EmailStr = Form(...), file:UploadFile = File(...)):
         return await controller.create_multimedia(email_client,file)
 
     @route.get('/')
