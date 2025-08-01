@@ -14,21 +14,21 @@ def routeMultimedia() -> APIRouter:
     case_use = CaseUseMultimedia(repository)
     controller = ControllerMultimedia(case_use)
 
-    @route.post('/{email_client}')
+    @route.post('/')
     async def create_multimedia(email_client:EmailStr, file:UploadFile = File(...)):
         return await controller.create_multimedia(email_client,file)
 
-    @route.get('/{email_client}')
-    def get_multimedia(email_client:EmailStr):
-        return controller.get_all_multimedia()
+    @route.get('/')
+    def get_multimedia(email_client:EmailStr,page:int,size_page):
+        return controller.get_all_multimedia(email_client,page,size_page)
 
     @route.get('/{id}')
     def get_multimedia_by_id(id: int):
         return controller.get_multimedia_by_id(id)
 
-    @route.patch('/{public_id}')
-    def update_multimedia(public_id:EmailStr, dto: MultimediaDtoUpdate):
-        return controller.update_multimedia(public_id, dto)
+    @route.patch('/{id}')
+    def update_multimedia(id:EmailStr, dto: MultimediaDtoUpdate):
+        return controller.update_multimedia(id, dto)
 
     @route.delete('/{id}')
     def delete_multimedia(id: str):

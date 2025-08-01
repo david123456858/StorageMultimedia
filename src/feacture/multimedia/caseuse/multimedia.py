@@ -9,6 +9,9 @@ import cloudinary.uploader as cloudy
 from fastapi import UploadFile
 
 class CaseUseMultimedia:
+    """
+    Caso de uso general del modulo multimedia
+    """
     def __init__(self, repository: RepositoryMultimedia):
         self.repo = repository
         self.repoUser = repositoryUser()
@@ -32,9 +35,9 @@ class CaseUseMultimedia:
             self.repo.save(multimedia)
             return SuccessProccess(200,'multimedia saved sussesfuly')
         except Exception as e:
-            return FailureProccess(500,'Error internal server')
+            return FailureProccess(500, f'Cloudinary error: {str(e)}')
 
-    def get_all_multimedia(self):
+    def get_all_multimedia(self,email_client:str,page:int,size_page:int):
         try:
             result = self.repo.findAll()
             for value in result:

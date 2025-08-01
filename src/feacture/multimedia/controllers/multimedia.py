@@ -18,8 +18,8 @@ class ControllerMultimedia:
         
         return JSONResponse({"message":response['value']},response['statusCode']) 
 
-    def get_all_multimedia(self):
-        response = self.case_use.get_all_multimedia()
+    def get_all_multimedia(self,email_client:str,page:int,size_page:int):
+        response = self.case_use.get_all_multimedia(email_client,page,size_page)
         
         if not response['success']:
             return JSONResponse({"error":response['error']},response['statusCode'])

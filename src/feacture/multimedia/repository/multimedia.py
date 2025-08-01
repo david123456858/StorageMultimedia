@@ -24,7 +24,14 @@ class RepositoryMultimedia:
                 Multimedia.is_deleted==False,
                 Multimedia.is_private==False
             ).all()
-
+        
+    def find_paginated(self,email_client:str,page:int,size_page:int):
+        return self.session.query(Multimedia)\
+            .filter(Multimedia.user_email == email_client)\
+            .order_by(Multimedia.created_at)\
+            .offset((page - 1)* size_page)\
+            .limit(size_page).all()
+        
     def findById(self, id: int):
         return self.session.query(Multimedia).filter(Multimedia.id == id).first()
     
