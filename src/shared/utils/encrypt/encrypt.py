@@ -18,13 +18,10 @@ def encrypt(email: str) -> str:
 
 def decrypt(token: str) -> str:
     result = cipher.decrypt(token.encode()).decode()
-    print(result)
     return result
 
 def verify_encrypt(token:str,password_client:str) :
-    print(token,password_client)
     token_descrypt = decrypt(token)
-    print(token_descrypt)
     password_client_descrypted = decrypt(password_client)
     return True
     

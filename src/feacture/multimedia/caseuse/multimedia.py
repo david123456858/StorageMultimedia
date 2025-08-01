@@ -4,7 +4,7 @@ from src.feacture.multimedia.entity.multimedia import Multimedia
 from src.shared.utils.result import SuccessProccess, FailureProccess
 from src.feacture.users.repository.user import repositoryUser
 from src.shared.utils.encrypt.hashed import hashing_hashlib
-
+from src.shared.utils.cloudinary.getMultimedia import get_cloudinary_multimedia
 
 from cloudinary.uploader import upload , destroy
 from cloudinary.utils import cloudinary_url
@@ -43,29 +43,13 @@ class CaseUseMultimedia:
         try:
             result = self.repo.find_paginated(hashing_hashlib(email_client), page ,size_page)
             
-            data = []
-            for value in result:
-                url,_ = cloudinary_url(value.public_id, resource_type=value.resource_type)
-                thumbail_url,_ = cloudinary_url(
-                    value.public_id,
-                    resource_type=value.resource_type,
-                    transformation=[
-                        {'width': 300, 'height': 300, 'crop': 'fill'},
-                        {'quality': 'auto'},
-                        {'format': 'auto'}
-                    ]
-                ) 
-                
-                data.append({
-                    'id': value.id,
-                    'public_id': value.public_id,
-                    'resource_type': value.resource_type,
-                    'created_at': value.created_at.isoformat() ,##lo convierte en string el datatime
-                    'url': url,
-                    'thumbnail_url': thumbail_url
-                })
-                
+            data = get_cloudinary_multimedia(result) 
+            
+            if data is Exception:
+                return FailureProccess(500,'Error of cloudinary')
+            
             return SuccessProccess(200,data)
+        
         except Exception as e : 
             return FailureProccess(500,'Error internal server') 
 
