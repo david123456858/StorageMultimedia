@@ -44,3 +44,31 @@ class RepositoryMultimedia:
     def delete(self, public_id: str):
         multimedia_find = self.session.query(Multimedia).filter(Multimedia.public_id == public_id)
         self.session.delete(multimedia_find)
+    
+    def find_by_tag_favorite(self,email_client:str):
+        return self.session.query(Multimedia)\
+            .filter(Multimedia.user_email == email_client,
+                    Multimedia.is_favorite==True)\
+            .order_by(Multimedia.updated_at)\
+            .all()
+    
+    def find_by_tag_archived(self,email_client:str):
+        return self.session.query(Multimedia)\
+            .filter(Multimedia.user_email == email_client,
+                    Multimedia.is_archived==True)\
+            .order_by(Multimedia.updated_at)\
+            .all()
+            
+    def find_by_tag_private(self,email_client:str):
+        return self.session.query(Multimedia)\
+            .filter(Multimedia.user_email == email_client,
+                    Multimedia.is_private==True)\
+            .order_by(Multimedia.updated_at)\
+            .all()
+
+    def find_by_tag_deleted(self,email_client:str):
+        return self.session.query(Multimedia)\
+            .filter(Multimedia.user_email == email_client,
+                    Multimedia.is_deleted==True)\
+            .order_by(Multimedia.updated_at)\
+            .all()

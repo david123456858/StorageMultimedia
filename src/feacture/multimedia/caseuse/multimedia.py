@@ -46,7 +46,7 @@ class CaseUseMultimedia:
             data = get_cloudinary_multimedia(result) 
             
             if data is Exception:
-                return FailureProccess(500,'Error of cloudinary')
+                return FailureProccess(500,'Error of| cloudinary')
             
             return SuccessProccess(200,data)
         
@@ -58,15 +58,14 @@ class CaseUseMultimedia:
 
     def update_multimedia(self, public_id:str, dto: MultimediaDtoUpdate):
         try:
-            ## part of clodinary
-            
-            ## part of database
             multimedia = self.repo.find_by_public_id(public_id)
+            
             for key , value in dto.model_dump(exclude_none=True).items():
                 setattr(multimedia,key,value)
                 
             self.repo.update(multimedia)    
-            return SuccessProccess(200,'ok')
+            
+            return SuccessProccess(200,'Tags updated sussefully')
         except Exception as e:   
             return FailureProccess(500,'Error internal Server')
 

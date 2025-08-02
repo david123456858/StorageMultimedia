@@ -2,14 +2,16 @@ from fastapi import UploadFile
 from fastapi.responses import JSONResponse
 
 from src.feacture.multimedia.caseuse.multimedia import CaseUseMultimedia
+from src.feacture.multimedia.caseuse.caseUseFindByTag import caseUseFindsByTags
 from src.feacture.multimedia.dtos.multimedia import MultimediaDtoCreate, MultimediaDtoUpdate
 
 
 
 class ControllerMultimedia:
-    def __init__(self, case_use: CaseUseMultimedia):
+    def __init__(self, case_use: CaseUseMultimedia,case_use_finds:caseUseFindsByTags):
         self.case_use = case_use
-
+        self.case_use_find = case_use_finds
+## part of case use crud -----------------------------------------------------------------
     async def create_multimedia(self, email_client:str ,file:UploadFile):
         response = await self.case_use.create_multimedia(email_client,file)
         
@@ -34,6 +36,7 @@ class ControllerMultimedia:
 
     def update_multimedia(self, public_id:str, dto: MultimediaDtoUpdate):
         response = self.case_use.update_multimedia(public_id, dto)
+        
         if not response['success']:
             return JSONResponse({"error":response['error']},response['statusCode'])
         
@@ -44,3 +47,34 @@ class ControllerMultimedia:
         if not result:
             return JSONResponse(content={"error": "Multimedia no encontrada"}, status_code=404)
         return JSONResponse(content={"message": "Multimedia eliminada"}, status_code=200)
+
+    ## part of case use find by tags -------------------------------------------------------------------
+    def find_by_tag_favorite(self,email_client:str):
+        response = self.case_use_find.find_by_tag_favorite(email_client)
+        if not response['success']:
+            return JSONResponse({"error":response['error']},response['statusCode'])
+        
+        return JSONResponse({"message":response['value']},response['statusCode'])
+    
+    def find_by_tag_private(self,email_client:str):
+        response = self.case_use_find.find_by_tag_private(email_client)
+        if not response['success']:
+            return JSONResponse({"error":response['error']},response['statusCode'])
+        
+        return JSONResponse({"message":response['value']},response['statusCode'])
+    
+    def find_by_tag_deleted(self,email_client:str):
+        response = self.case_use_find.find_by_tag_deleted(email_client)
+        if not response['success']:
+            return JSONResponse({"error":response['error']},response['statusCode'])
+        
+        return JSONResponse({"message":response['value']},response['statusCode'])
+    
+    def find_by_tag_archived(self,email_client:str):
+        response = self.case_use_find.find_by_tag_archived(email_client)
+        if not response['success']:
+            return JSONResponse({"error":response['error']},response['statusCode'])
+        
+        return JSONResponse({"message":response['value']},response['statusCode'])
+    
+    

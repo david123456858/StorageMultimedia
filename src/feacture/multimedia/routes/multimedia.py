@@ -4,6 +4,7 @@ from pydantic import EmailStr
 
 from src.feacture.multimedia.controllers.multimedia import ControllerMultimedia
 from src.feacture.multimedia.caseuse.multimedia import CaseUseMultimedia
+from src.feacture.multimedia.caseuse.caseUseFindByTag import caseUseFindsByTags
 from src.feacture.multimedia.repository.multimedia import RepositoryMultimedia
 from src.feacture.multimedia.dtos.multimedia import MultimediaDtoUpdate
 
@@ -11,8 +12,11 @@ route = APIRouter(prefix='/multimedia', tags=['Multimedia'])
 
 def routeMultimedia() -> APIRouter:
     repository = RepositoryMultimedia()
+    
     case_use = CaseUseMultimedia(repository)
-    controller = ControllerMultimedia(case_use)
+    case_use_finds_by_tag = caseUseFindsByTags(repository)
+    
+    controller = ControllerMultimedia(case_use,case_use_finds_by_tag)
 
     @route.post('/')
     async def create_multimedia(email_client:EmailStr = Form(...), file:UploadFile = File(...)):
@@ -27,11 +31,31 @@ def routeMultimedia() -> APIRouter:
         return controller.get_multimedia_by_id(id)
 
     @route.patch('/{id}')
-    def update_multimedia(id:EmailStr, dto: MultimediaDtoUpdate):
+    def update_multimedia(id:str, dto: MultimediaDtoUpdate):
         return controller.update_multimedia(id, dto)
 
     @route.delete('/{id}')
     def delete_multimedia(id: str):
         return controller.delete_multimedia(id)
+    
+    
+    @route.get('/favorites/{email_client}')
+    def get_favorites(email_client: EmailStr):
+        return controller.find_by_tag_favorite(email_client)
+
+    
+    @route.get('/archived/{email_client}')
+    def get_archived(email_client: EmailStr):
+        return controller.find_by_tag_archived(email_client)
+
+    
+    @route.get('/deleted/{email_client}')
+    def get_deleted(email_client: EmailStr):
+        return controller.find_by_tag_deleted(email_client)
+
+    
+    @route.get('/private/{email_client}')
+    def get_private(email_client: EmailStr):
+        return controller.find_by_tag_private(email_client)
 
     return route
