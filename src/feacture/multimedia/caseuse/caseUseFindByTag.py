@@ -2,6 +2,7 @@ from src.feacture.users.repository.user import repositoryUser
 from src.feacture.multimedia.repository.multimedia import RepositoryMultimedia
 from src.shared.utils.result import SuccessProccess, FailureProccess
 from src.shared.utils.encrypt.hashed import hashing_hashlib
+from src.shared.utils.cloudinary.getMultimedia import get_cloudinary_multimedia
 
 ##
 # Modulo a revisar porque no estoy convencido de hacer esto asi
@@ -20,9 +21,13 @@ class caseUseFindsByTags:
             if not find_user:
                 return FailureProccess(404, 'User Not Found')
             
-            find_by_tag = self.repo.find_by_tag_favorite(find_user)
-            return SuccessProccess(200,find_by_tag)
+            find_by_tag = self.repo.find_by_tag_favorite(hashing_hashlib(email_client))
+            
+            multimedia = get_cloudinary_multimedia(find_by_tag)
+            
+            return SuccessProccess(200,multimedia)
         except Exception as e:
+            print(e)
             return FailureProccess(500,'Error internal server') 
     
     def find_by_tag_archived(self,email_client:str):
@@ -31,8 +36,11 @@ class caseUseFindsByTags:
             if not find_user:
                 return FailureProccess(404, 'User Not Found')
             
-            find_by_tag = self.repo.find_by_tag_archived(find_user)
-            return SuccessProccess(200,find_by_tag)
+            find_by_tag = self.repo.find_by_tag_archived(hashing_hashlib(email_client))
+            
+            multimedia = get_cloudinary_multimedia(find_by_tag)
+            
+            return SuccessProccess(200,multimedia)
         except Exception as e:
             return FailureProccess(500,'Error internal server') 
     
@@ -42,8 +50,11 @@ class caseUseFindsByTags:
             if not find_user:
                 return FailureProccess(404, 'User Not Found')
             
-            find_by_tag = self.repo.find_by_tag_deleted(find_user)
-            return SuccessProccess(200,find_by_tag)
+            find_by_tag = self.repo.find_by_tag_deleted(hashing_hashlib(email_client))
+            
+            multimedia = get_cloudinary_multimedia(find_by_tag)
+            
+            return SuccessProccess(200,multimedia)
         except Exception as e:
             return FailureProccess(500,'Error internal server') 
     
@@ -53,7 +64,10 @@ class caseUseFindsByTags:
             if not find_user:
                 return FailureProccess(404, 'User Not Found')
             
-            find_by_tag = self.repo.find_by_tag_private(find_user)
-            return SuccessProccess(200,find_by_tag)
+            find_by_tag = self.repo.find_by_tag_private(hashing_hashlib(email_client))
+            
+            multimedia = get_cloudinary_multimedia(find_by_tag)
+            
+            return SuccessProccess(200,multimedia)
         except Exception as e:
             return FailureProccess(500,'Error internal server') 
