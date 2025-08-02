@@ -34,9 +34,9 @@ def routeMultimedia() -> APIRouter:
     def update_multimedia(id:str, dto: MultimediaDtoUpdate):
         return controller.update_multimedia(id, dto)
 
-    @route.delete('/{id}')
-    def delete_multimedia(id: str):
-        return controller.delete_multimedia(id)
+    @route.delete('/{email_client}')
+    def delete_multimedia(email_client: str):
+        return controller.delete_multimedia(email_client)
     
     
     @route.get('/favorites/{email_client}')

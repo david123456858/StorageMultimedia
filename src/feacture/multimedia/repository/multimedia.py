@@ -42,9 +42,16 @@ class RepositoryMultimedia:
         return self.session.query(Multimedia).filter(Multimedia.public_id == public_id).first()
     
     def delete(self, public_id: str):
-        multimedia_find = self.session.query(Multimedia).filter(Multimedia.public_id == public_id)
+        multimedia_find = self.session.query(Multimedia).filter(Multimedia.public_id == public_id).first()
         self.session.delete(multimedia_find)
+        self.session.commit()
     
+    def delete_all(self,public_id):
+        self.session.query(Multimedia)\
+            .filter(Multimedia.public_id.in_(public_id))\
+            .delete(synchronize_session=False)
+        self.session.commit()
+        
     def find_by_tag_favorite(self,email_client:str):
         return self.session.query(Multimedia)\
             .filter(Multimedia.user_email == email_client,

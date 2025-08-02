@@ -6,7 +6,8 @@ from src.feacture.users.repository.user import repositoryUser
 from src.shared.utils.encrypt.hashed import hashing_hashlib
 from src.shared.utils.cloudinary.getMultimedia import get_cloudinary_multimedia
 
-from cloudinary.uploader import upload , destroy
+from cloudinary.uploader import upload 
+from cloudinary.api import delete_resources
 from cloudinary.utils import cloudinary_url
 from fastapi import UploadFile
 
@@ -46,7 +47,7 @@ class CaseUseMultimedia:
             data = get_cloudinary_multimedia(result) 
             
             if data is Exception:
-                return FailureProccess(500,'Error of| cloudinary')
+                return FailureProccess(500,'Error of cloudinary')
             
             return SuccessProccess(200,data)
         
@@ -67,17 +68,19 @@ class CaseUseMultimedia:
             
             return SuccessProccess(200,'Tags updated sussefully')
         except Exception as e:   
-            return FailureProccess(500,'Error internal Server')
-
-    def delete_multimedia(self, public_id: str):
+            return FailureProccess(500,'Error internal Server') 
+        
+    def delete_multimedia(self,email_client:str):
         try:
-            multimedia_find =  self.repo.find_by_public_id(public_id)
-            if not multimedia_find :
-                return FailureProccess(404,'resource of multimedia dont find')
+            multimedia_list = self.repo.find_by_tag_deleted(hashing_hashlib(email_client))
+            public_ids = [m.public_id for m in multimedia_list]
             
-            detroy_image = destroy(public_id)
+            print(public_ids)
+            self.repo.delete_all(public_ids) 
             
-            self.repo.update(multimedia_find)
-            return SuccessProccess(200,'')
+            delete_resources(public_ids)
+            
+            return SuccessProccess(200,'the multimedia files is deleted sussefully')
         except Exception as e:
-            return FailureProccess(500,'')
+            print(e)
+            return FailureProccess(500,'Error internal server')

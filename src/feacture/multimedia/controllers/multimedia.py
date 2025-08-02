@@ -42,11 +42,12 @@ class ControllerMultimedia:
         
         return JSONResponse({"message":response['value']},response['statusCode']) 
 
-    def delete_multimedia(self, id: str):
-        result = self.case_use.delete_multimedia(id)
-        if not result:
-            return JSONResponse(content={"error": "Multimedia no encontrada"}, status_code=404)
-        return JSONResponse(content={"message": "Multimedia eliminada"}, status_code=200)
+    def delete_multimedia(self, email_client: str):
+        response = self.case_use.delete_multimedia(email_client)
+        if not response['success']:
+            return JSONResponse({"error":response['error']},response['statusCode'])
+        
+        return JSONResponse({"message":response['value']},response['statusCode']) 
 
     ## part of case use find by tags -------------------------------------------------------------------
     def find_by_tag_favorite(self,email_client:str):
