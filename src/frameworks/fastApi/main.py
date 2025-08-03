@@ -30,7 +30,7 @@ app.add_middleware(
 Base.metadata.create_all(bind=dataBaseTurso.get_instance())
 
 # method healt data base 
-dataBaseTurso.test_connection() 
+#dataBaseTurso.test_connection() 
 
 ## apartado de rutas
 app.include_router(routesUser.moduleRouterUser(), prefix='/api',tags=['users']) 
