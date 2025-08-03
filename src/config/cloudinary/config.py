@@ -15,5 +15,3 @@ config = cloudinary.config(
     api_secret = CLODINARY_SECRECT,
     secure=True
 )
-
-print(F"✔ AL PARECER SALIO BIEN {config}")
