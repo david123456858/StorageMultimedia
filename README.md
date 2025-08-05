@@ -1,24 +1,25 @@
-# 📦 StorageMultimedia Backend
+#  StorageMultimedia Backend
 
 Este es un proyecto backend desarrollado con **FastAPI** para la gestión de usuarios y almacenamiento de archivos multimedia. Una iniciativa que refleja buenas prácticas, casos de uso reales y una experiencia de usuario excelente.
+
 En este protecto se quiso implementar base de lo que son las api Rest, con una screaming architecture pero siguiendo las bases e intenciones de la arquitectura limpia, principios solid, algunos patrones de diseño y patrones creacionales.
 
 ---
 
 ## 🚀 Tecnologías utilizadas
 
-- 🐍 Python 3.11+
-- ⚡ FastAPI
-- 🚀 Uvicorn
-- ☁️ Cloudinary (almacenamiento de archivos)
-- 🧠 Turso (base de datos SQLite en la nube)
+- Python 3.11+
+- FastAPI
+- Uvicorn
+- Cloudinary (almacenamiento de archivos)
+- Turso (base de datos SQLite en la nube)
 
 >[!NOTE]  
 Este backend está diseñado pensando en escalabilidad, modularidad y separación de responsabilidades.
 
 ---
 
-## 🧱 Arquitectura del Proyecto
+## Arquitectura del Proyecto
 
 El proyecto sigue una estructura modular y limpia inspirada en principios de **Clean Architecture** y **DDD básico**.
 
@@ -38,7 +39,7 @@ StorageMultimedia/
 └── README.md
 ```
 
-## 📥 Instalación paso a paso
+## Instalación paso a paso
 
 ### 1. Clonar el repositorio
 
@@ -92,10 +93,10 @@ El parámetro --reload es ideal para desarrollo ya que recarga el servidor autom
 ✅ Demo disponible en:  
 [https://storagemultimedia.onrender.com](https://storagemultimedia.onrender.com)
 
-☁️ Base de datos y almacenamiento
-🧠 Turso es usado como base de datos relacional SQLite en la nube, ideal para proyectos ligeros.
+> Base de datos y almacenamiento
+Turso es usado como base de datos relacional SQLite en la nube, ideal para proyectos ligeros.
 
-📦 Cloudinary gestiona el almacenamiento de imágenes/videos de manera eficiente y escalable.
+Cloudinary gestiona el almacenamiento de imágenes/videos de manera eficiente y escalable.
 
 >[!NOTE]
 Ambos servicios son fácilmente reemplazables si decides migrar a PostgreSQL o AWS S3.
@@ -118,4 +119,17 @@ pip freeze > requirements.txt
 
 ✅ ¡Listo! Con estos pasos cualquier persona podrá descargar tu proyecto, instalarlo y ejecutarlo sin complicaciones.
 
+Ejemplos de Endpoints
+Aquí algunos ejemplos prácticos extraídos directamente de la documentación Swagger:
 
+📄 Consulta paginada de archivos multimedia:
+
+<p align="center"> <img src="./src/assets/447shots_so.jpeg" width="1000"/> </p>
+
+📤 Subida de archivos multimedia (vía formulario):
+
+<p align="center"> <img src="./src/assets/129shots_so.jpeg" width="1000"/> </p>
+
+📚 Documentación general de la API:
+
+<p align="center"> <img src="./src/assets/926shots_so.jpeg" width="1000"/> </p>
