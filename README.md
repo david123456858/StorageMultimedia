@@ -13,7 +13,7 @@ En este protecto se quiso implementar base de lo que son las api Rest, con una s
 - ☁️ Cloudinary (almacenamiento de archivos)
 - 🧠 Turso (base de datos SQLite en la nube)
 
-[!NOTE]  
+>[!NOTE]  
 Este backend está diseñado pensando en escalabilidad, modularidad y separación de responsabilidades.
 
 ---
@@ -97,7 +97,7 @@ El parámetro --reload es ideal para desarrollo ya que recarga el servidor autom
 
 📦 Cloudinary gestiona el almacenamiento de imágenes/videos de manera eficiente y escalable.
 
-[!NOTE]
+>[!NOTE]
 Ambos servicios son fácilmente reemplazables si decides migrar a PostgreSQL o AWS S3.
 
 ## 📝 Archivo `requirements.txt`
@@ -117,4 +117,5 @@ pip freeze > requirements.txt
 
 
 ✅ ¡Listo! Con estos pasos cualquier persona podrá descargar tu proyecto, instalarlo y ejecutarlo sin complicaciones.
+
 
