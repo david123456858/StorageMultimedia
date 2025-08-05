@@ -1,16 +1,42 @@
 # 📦 StorageMultimedia Backend
 
-Este es un proyecto backend desarrollado con **FastAPI** para la gestión de usuarios y almacenamiento de archivos multimedia.
+Este es un proyecto backend desarrollado con **FastAPI** para la gestión de usuarios y almacenamiento de archivos multimedia. Una iniciativa que refleja buenas prácticas, casos de uso reales y una experiencia de usuario excelente.
+En este protecto se quiso implementar base de lo que son las api Rest, con una screaming architecture pero siguiendo las bases e intenciones de la arquitectura limpia, principios solid, algunos patrones de diseño y patrones creacionales.
 
 ---
 
 ## 🚀 Tecnologías utilizadas
 
-- Python 3.11+
-- FastAPI
-- Uvicorn
+- 🐍 Python 3.11+
+- ⚡ FastAPI
+- 🚀 Uvicorn
+- ☁️ Cloudinary (almacenamiento de archivos)
+- 🧠 Turso (base de datos SQLite en la nube)
+
+[!NOTE]  
+Este backend está diseñado pensando en escalabilidad, modularidad y separación de responsabilidades.
 
 ---
+
+## 🧱 Arquitectura del Proyecto
+
+El proyecto sigue una estructura modular y limpia inspirada en principios de **Clean Architecture** y **DDD básico**.
+
+```plaintext
+StorageMultimedia/
+│
+├── src/
+│   ├── frameworks/
+│   │   └── fastApi/        # Infraestructura: Servidor FastAPI
+│   └── feacture/
+│       └── User/           # Módulo del usuario
+│           ├── controller/ # Controladores HTTP
+│           ├── routes/     # Definición de endpoints
+│           ├── caseUse/    # Casos de uso (negocio)
+│           └── ...         # Otros adaptadores/lógica
+├── requirements.txt
+└── README.md
+```
 
 ## 📥 Instalación paso a paso
 
@@ -54,6 +80,8 @@ Ubícate en la carpeta raíz del proyecto y ejecuta:
 ```bash
 uvicorn src.frameworks.fastApi.main:app --reload
 ```
+>[!IMPORTANT]
+El parámetro --reload es ideal para desarrollo ya que recarga el servidor automáticamente ante cambios.
 
 ✅ El servidor quedará disponible en:  
 [http://localhost:8000](http://localhost:8000)
@@ -61,25 +89,16 @@ uvicorn src.frameworks.fastApi.main:app --reload
 ✅ Documentación automática (Swagger):  
 [http://localhost:8000/docs](http://localhost:8000/docs)
 
----
+✅ Demo disponible en:  
+[https://storagemultimedia.onrender.com](https://storagemultimedia.onrender.com)
 
-## 📁 Estructura básica del proyecto
+☁️ Base de datos y almacenamiento
+🧠 Turso es usado como base de datos relacional SQLite en la nube, ideal para proyectos ligeros.
 
-```
-StorageMultimedia/
-│
-├── src/
-│   ├── frameworks/
-│   │   └── fastApi/
-│   │       └── main.py
-│   └── users/
-│       └── routes.py
-│
-├── requirements.txt
-└── README.md
-```
+📦 Cloudinary gestiona el almacenamiento de imágenes/videos de manera eficiente y escalable.
 
----
+[!NOTE]
+Ambos servicios son fácilmente reemplazables si decides migrar a PostgreSQL o AWS S3.
 
 ## 📝 Archivo `requirements.txt`
 
@@ -96,14 +115,6 @@ Si agregas nuevas librerías, no olvides actualizar este archivo con:
 pip freeze > requirements.txt
 ```
 
----
-
-## ❗ Notas adicionales
-
-- El entorno virtual te ayuda a mantener tus dependencias organizadas, pero es opcional.
-- El comando `--reload` permite que el servidor se reinicie automáticamente cada vez que haces cambios en el código.
-- Todas las rutas están organizadas en routers para facilitar la escalabilidad del proyecto.
-
----
 
 ✅ ¡Listo! Con estos pasos cualquier persona podrá descargar tu proyecto, instalarlo y ejecutarlo sin complicaciones.
+
