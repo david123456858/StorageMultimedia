@@ -1,135 +1,257 @@
-#  StorageMultimedia Backend
+# 🎬 StorageMultimedia API
 
-Este es un proyecto backend desarrollado con **FastAPI** para la gestión de usuarios y almacenamiento de archivos multimedia. Una iniciativa que refleja buenas prácticas, casos de uso reales y una experiencia de usuario excelente.
+[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Python](https://img.shields.io/badge/python-3.11+-blue.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
+[![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white)](https://cloudinary.com/)
+[![Turso](https://img.shields.io/badge/Turso-4F46E5?style=for-the-badge&logo=sqlite&logoColor=white)](https://turso.tech/)
 
-En este protecto se quiso implementar base de lo que son las api Rest, con una screaming architecture pero siguiendo las bases e intenciones de la arquitectura limpia, principios solid, algunos patrones de diseño y patrones creacionales.
+> **Backend moderno para gestión de usuarios y almacenamiento de archivos multimedia**
 
----
+Un proyecto backend desarrollado con **FastAPI** que implementa principios de **Clean Architecture**, **SOLID** y patrones de diseño para la gestión eficiente de usuarios y archivos multimedia.
 
-## 🚀 Tecnologías utilizadas
+## 🚀 Demo en Vivo
 
-- Python 3.11+
-- FastAPI
-- Uvicorn
-- Cloudinary (almacenamiento de archivos)
-- Turso (base de datos SQLite en la nube)
+- **API Base:** [https://storagemultimedia.onrender.com](https://storagemultimedia.onrender.com)
+- **Documentación Swagger:** [https://storagemultimedia.onrender.com/docs](https://storagemultimedia.onrender.com/docs)
+- **Redoc:** [https://storagemultimedia.onrender.com/redoc](https://storagemultimedia.onrender.com/redoc)
 
->[!NOTE]  
-Este backend está diseñado pensando en escalabilidad, modularidad y separación de responsabilidades.
+## ✨ Características Principales
 
----
+- 🔐 **Gestión de usuarios** con autenticación segura
+- 📁 **Almacenamiento multimedia** en la nube (Cloudinary)
+- 📊 **Consultas paginadas** para optimizar rendimiento
+- 🏗️ **Arquitectura limpia** y modular
+- 📚 **Documentación automática** con Swagger/OpenAPI
+- 🧪 **Estructura escalable** y mantenible
+- ⚡ **Base de datos SQLite** en la nube con Turso
 
-## Arquitectura del Proyecto
+## 🛠️ Stack Tecnológico
 
-El proyecto sigue una estructura modular y limpia inspirada en principios de **Clean Architecture** y **DDD básico**.
+| Tecnología | Propósito | Versión |
+|------------|-----------|---------|
+| **FastAPI** | Framework web asíncrono | 0.110.0+ |
+| **Python** | Lenguaje principal | 3.11+ |
+| **Uvicorn** | Servidor ASGI | 0.29.0+ |
+| **Cloudinary** | Almacenamiento multimedia | - |
+| **Turso** | Base de datos SQLite en la nube | - |
 
-```plaintext
+## 🏗️ Arquitectura del Proyecto
+
+El proyecto sigue principios de **Clean Architecture** con separación clara de responsabilidades:
+
+```
 StorageMultimedia/
-│
 ├── src/
 │   ├── frameworks/
-│   │   └── fastApi/        # Infraestructura: Servidor FastAPI
-│   └── feacture/
-│       └── User/           # Módulo del usuario
-│           ├── controller/ # Controladores HTTP
-│           ├── routes/     # Definición de endpoints
-│           ├── caseUse/    # Casos de uso (negocio)
-│           └── ...         # Otros adaptadores/lógica
-├── requirements.txt
-└── README.md
+│   │   └── fastApi/           # 🌐 Infraestructura web (FastAPI)
+│   │       ├── main.py        # Punto de entrada de la aplicación
+│   │       └── config/        # Configuraciones
+│   └── feature/
+│       └── User/              # 👥 Módulo de usuarios
+│           ├── controller/    # 🎮 Controladores HTTP
+│           ├── routes/        # 🛣️ Definición de endpoints
+│           ├── caseUse/       # 💼 Casos de uso (lógica de negocio)
+│           ├── entities/      # 🏛️ Entidades del dominio
+│           ├── repository/    # 🗄️ Acceso a datos
+│           └── services/      # 🔧 Servicios auxiliares
+├── requirements.txt           # 📦 Dependencias
+├── .env.example              # 🔐 Variables de entorno ejemplo
+└── README.md                 # 📖 Documentación
 ```
 
-## Instalación paso a paso
+## 🚀 Instalación y Configuración
 
-### 1. Clonar el repositorio
+### Prerrequisitos
+
+- Python 3.11 o superior
+- Git
+- Cuenta en [Cloudinary](https://cloudinary.com/) (opcional para desarrollo)
+- Cuenta en [Turso](https://turso.tech/) (opcional para desarrollo)
+
+### Instalación Local
+
+1. **Clona el repositorio**
+   ```bash
+   git clone https://github.com/david123456858/StorageMultimedia.git
+   cd StorageMultimedia
+   ```
+
+2. **Crea el entorno virtual**
+   ```bash
+   python -m venv env
+   ```
+
+3. **Activa el entorno virtual**
+   ```bash
+   # Windows
+   env\Scripts\activate
+   
+   # macOS/Linux
+   source env/bin/activate
+   ```
+
+4. **Instala las dependencias**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Configura las variables de entorno**
+   ```bash
+   cp .env.example .env
+   # Edita .env con tus credenciales
+   ```
+
+6. **Ejecuta la aplicación**
+   ```bash
+   uvicorn src.frameworks.fastApi.main:app --reload
+   ```
+
+### ✅ Verificación de Instalación
+
+Una vez iniciado el servidor, verifica que todo funcione correctamente:
+
+- **Servidor local:** [http://localhost:8000](http://localhost:8000)
+- **Documentación:** [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Health check:** `GET http://localhost:8000/health`
+
+## 📚 Uso de la API
+
+### Endpoints Principales
+
+#### 👥 Gestión de Usuarios
+
+```http
+POST /api/v1/users/register
+Content-Type: application/json
+
+{
+  "username": "usuario_ejemplo",
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+
+#### 📁 Gestión de Archivos
+
+```http
+POST /api/v1/multimedia/upload
+Content-Type: multipart/form-data
+
+file: [archivo_multimedia]
+user_id: 123
+title: "Mi archivo"
+description: "Descripción del archivo"
+```
+
+#### 📄 Consulta Paginada
+
+```http
+GET /api/v1/multimedia?page=1&limit=10&user_id=123
+```
+
+**Respuesta:**
+```json
+{
+  "data": [
+    {
+      "id": 1,
+			"public_id": "adasfasfasfasf",
+			"resource_type": "image",
+			"created_at": "2025-08-01T20:34:50.835752",
+			"url": "https://res.cloudinary.com",
+			"thumbnail_url": "https://res.cloudinary.com"
+		}
+    }
+  ]
+}
+```
+
+### Códigos de Respuesta HTTP
+
+| Código | Descripción |
+|--------|-------------|
+| `200` | Operación exitosa |
+| `201` | Recurso creado |
+| `400` | Solicitud inválida |
+| `401` | No autorizado |
+| `404` | Recurso no encontrado |
+| `422` | Error de validación |
+| `500` | Error interno del servidor |
+
+## 🧪 Testing (Próximamente)
 
 ```bash
-git clone <URL_DE_TU_REPOSITORIO>
-cd StorageMultimedia
+# Ejecutar tests unitarios
+pytest tests/unit/
+
+# Ejecutar tests de integración
+pytest tests/integration/
+
+# Coverage report
+pytest --cov=src tests/
 ```
 
-### 2. Crear un entorno virtual (opcional pero recomendado)
+## 🚀 Deployment
 
-```bash
-python -m venv env
+### Render (Recomendado)
+
+1. Conecta tu repositorio de GitHub
+2. Configura las variables de entorno
+3. El servicio se despliega automáticamente
+
+### Variables de Entorno Requeridas
+
+```env
+CLOUDINARY_CLOUD_NAME=tu_cloud_name
+CLOUDINARY_API_KEY=tu_api_key
+CLOUDINARY_API_SECRET=tu_api_secret
+TURSO_DATABASE_URL=tu_database_url
+TURSO_AUTH_TOKEN=tu_auth_token
 ```
 
-### 3. Activar el entorno virtual
+## 🔧 Desarrollo
 
-- En **Windows**:
-```bash
-env\Scripts\activate
-```
+### Agregar Nueva Funcionalidad
 
-- En **macOS/Linux**:
-```bash
-source env/bin/activate
-```
+1. Crea un nuevo módulo en `src/feature/NuevoModulo/`
+2. Implementa los casos de uso en `caseUse/`
+3. Crea los controladores en `controller/`
+4. Define las rutas en `routes/`
+5. Actualiza `requirements.txt` si es necesario
 
-### 4. Instalar las dependencias
+### Estándares de Código
 
-```bash
-pip install -r requirements.txt
-```
+- Seguir principios **SOLID**
+- Usar **Type Hints** en Python
+- Documentar funciones complejas
+- Mantener separación de responsabilidades
 
----
+## 🤝 Contribución
 
-## 🚦 Cómo ejecutar el servidor
+1. Fork del proyecto
+2. Crea una rama feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit de cambios (`git commit -m 'Añadir nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Abre un Pull Request
 
-Ubícate en la carpeta raíz del proyecto y ejecuta:
+## 📝 Roadmap
 
-```bash
-uvicorn src.frameworks.fastApi.main:app --reload
-```
->[!IMPORTANT]
-El parámetro --reload es ideal para desarrollo ya que recarga el servidor automáticamente ante cambios.
+- [ ] Sistema de autenticación JWT
+- [ ] Tests unitarios y de integración
+- [ ] Documentación de API más detallada
+- [ ] Soporte para videos
+- [ ] Sistema de notificaciones
+- [ ] Cache con Redis
+- [ ] Métricas y monitoreo
 
-✅ El servidor quedará disponible en:  
-[http://localhost:8000](http://localhost:8000)
+## 🐛 Problemas Conocidos
 
-✅ Documentación automática (Swagger):  
-[http://localhost:8000/docs](http://localhost:8000/docs)
+- **Límite de tamaño de archivos:** Cloudinary tiene límites en plan gratuito
+- **Conexiones concurrentes:** Turso tiene límites en plan gratuito
 
-✅ Demo disponible en:  
-[https://storagemultimedia.onrender.com](https://storagemultimedia.onrender.com)
+## 📧 Contacto
 
-> Base de datos y almacenamiento
-Turso es usado como base de datos relacional SQLite en la nube, ideal para proyectos ligeros.
+- **GitHub:** [@david123456858](https://github.com/david123456858)
+- **LinkedIn:** [@JuanPeralta](www.linkedin.com/in/juan-david-peralta-fuentes-a7a944268)
+- **Email:** juandavidperaltafuentes@gmail.com 
 
-Cloudinary gestiona el almacenamiento de imágenes/videos de manera eficiente y escalable.
-
->[!NOTE]
-Ambos servicios son fácilmente reemplazables si decides migrar a PostgreSQL o AWS S3.
-
-## 📝 Archivo `requirements.txt`
-
-Este archivo contiene las dependencias necesarias para ejecutar el proyecto:
-
-```plaintext
-fastapi==0.110.0
-uvicorn==0.29.0
-```
-
-Si agregas nuevas librerías, no olvides actualizar este archivo con:
-
-```bash
-pip freeze > requirements.txt
-```
-
-
-✅ ¡Listo! Con estos pasos cualquier persona podrá descargar tu proyecto, instalarlo y ejecutarlo sin complicaciones.
-
-Ejemplos de Endpoints
-Aquí algunos ejemplos prácticos extraídos directamente de la documentación Swagger:
-
-📄 Consulta paginada de archivos multimedia:
-
-<p align="center"> <img src="./src/assets/447shots_so.jpeg" width="1000"/> </p>
-
-📤 Subida de archivos multimedia (vía formulario):
-
-<p align="center"> <img src="./src/assets/129shots_so.jpeg" width="1000"/> </p>
-
-📚 Documentación general de la API:
-
-<p align="center"> <img src="./src/assets/926shots_so.jpeg" width="1000"/> </p>
