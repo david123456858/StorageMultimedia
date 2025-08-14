@@ -21,7 +21,6 @@ class CaseUseMultimedia:
 
     async def create_multimedia(self, email_client:str ,file:UploadFile):
         try:
-            
             user_find = self.repoUser.find_by_email(hashing_hashlib(email_client)) 
             if not user_find:
                 return FailureProccess(404, 'User Not Found')
@@ -40,7 +39,7 @@ class CaseUseMultimedia:
         except Exception as e:
             return FailureProccess(500, f'Cloudinary error: {str(e)}')
 
-    def get_all_multimedia(self,email_client:str,page:int,size_page:int):
+    def get_all_multimedia(self, email_client:str,page:int,size_page:int):
         try:
             result = self.repo.find_paginated(hashing_hashlib(email_client), page ,size_page)
             
