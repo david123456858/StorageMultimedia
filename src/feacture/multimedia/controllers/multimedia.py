@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from src.feacture.multimedia.caseuse.multimedia import CaseUseMultimedia
 from src.feacture.multimedia.caseuse.caseUseFindByTag import caseUseFindsByTags
 from src.feacture.multimedia.dtos.multimedia import MultimediaDtoCreate, MultimediaDtoUpdate
+from src.shared.utils.response.response_factory import ResponseFactory
 
 
 
@@ -18,7 +19,9 @@ class ControllerMultimedia:
         if not response['success']:
             return JSONResponse({"error":response['error']},response['statusCode'])
         
-        return JSONResponse({"message":response['value']},response['statusCode']) 
+        ResponseFactory().create_process(response['success'],response['value'],response['statusCode'])
+        return JSONResponse({"message":response['value']},response['statusCode'])
+    
 
     def get_all_multimedia(self,email_client:str,page:int,size_page:int):
         response = self.case_use.get_all_multimedia(email_client,page,size_page)
