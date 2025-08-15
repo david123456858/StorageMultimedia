@@ -1,6 +1,4 @@
 
-from src.shared.interfaces.result.result import ISuccessProcess, IFailureProcess
-
 def SuccessProccess(statusCode:int,value):
     response = {
         "value": value,
