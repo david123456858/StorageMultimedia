@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 
 class ResponseBuiler(ABC):
     """
-    clase abstracta con el fin de tener el contrato con los productos
+    abstract class with finally of have the contract with the products
     """
     @abstractmethod
     def build(self)-> JSONResponse:
@@ -14,7 +14,7 @@ class ResponseBuiler(ABC):
     
 class ResponseSuccessProcess(ResponseBuiler):
     """
-    clase que representa el producto de proceso recuelto correctamente
+    class that which represents the product of process successfully
     """
     def __init__(self, status_code:int , value ) -> None:
         self.status_code = status_code
@@ -26,7 +26,7 @@ class ResponseSuccessProcess(ResponseBuiler):
     
 class ResponseFailureProcess(ResponseBuiler):
     """
-    clase que representa el producto de proceso resulto malo
+    class that which represents the product of process Failure
     """
     def __init__(self, status_code:int , error) -> None:
         self.status_code = status_code
@@ -37,10 +37,11 @@ class ResponseFailureProcess(ResponseBuiler):
         return JSONResponse(self.error,self.status_code)
     
 class ResponseFactory:
-    """ Clase factory que arroga el tipo de respuesta correspondiente al que viene de el success
+    """
+    factory class that send the type of answer
     """
     @staticmethod
-    def create_process(success:bool ,data, status_code=200):
-        if success:
-            return ResponseSuccessProcess(status_code,data).build()
-        return ResponseFailureProcess(status_code,data).build()
+    def create_process(response):
+        if response['success']:
+            return ResponseSuccessProcess(response['status_code'],response['value']).build()
+        return ResponseFailureProcess(response['status_code'],response['error']).build()

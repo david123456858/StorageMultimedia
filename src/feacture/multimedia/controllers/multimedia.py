@@ -14,16 +14,11 @@ class ControllerMultimedia:
         self.case_use_find = case_use_finds
 ## part of case use crud -----------------------------------------------------------------
     async def create_multimedia(self, email_client:str ,file:UploadFile):
-        response = await self.case_use.create_multimedia(email_client,file)
+        response = await self.case_use.create_multimedia(email_client,file)        
+        ResponseFactory().create_process(response)
         
-        if not response['success']:
-            return JSONResponse({"error":response['error']},response['statusCode'])
-        
-        ResponseFactory().create_process(response['success'],response['value'],response['statusCode'])
-        return JSONResponse({"message":response['value']},response['statusCode'])
-    
 
-    def get_all_multimedia(self,email_client:str,page:int,size_page:int):
+    def get_all_multimedia(self,email_client: str,page:int,size_page:int):
         response = self.case_use.get_all_multimedia(email_client,page,size_page)
         
         if not response['success']:
