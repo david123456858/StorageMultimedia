@@ -10,6 +10,7 @@ class controllerUserAuth():
         self.caseUse = caseUseLogin
         self.caseUseRegister = caseUseRegister
         pass
+    ## AFTER DESIGN PATTERN 
     
     def createUser(self,user:userDtoRegiter):
         response = self.caseUseRegister.createUser(user)

@@ -20,11 +20,7 @@ class ControllerMultimedia:
 
     def get_all_multimedia(self,email_client: str,page:int,size_page:int):
         response = self.case_use.get_all_multimedia(email_client,page,size_page)
-        
-        if not response['success']:
-            return JSONResponse({"error":response['error']},response['statusCode'])
-        
-        return JSONResponse({"message":response['value']},response['statusCode']) 
+        ResponseFactory().create_process(response)
 
     def get_multimedia_by_id(self, id: int):
         result = self.case_use.get_multimedia_by_id(id)
@@ -34,46 +30,27 @@ class ControllerMultimedia:
 
     def update_multimedia(self, public_id:str, dto: MultimediaDtoUpdate):
         response = self.case_use.update_multimedia(public_id, dto)
-        
-        if not response['success']:
-            return JSONResponse({"error":response['error']},response['statusCode'])
-        
-        return JSONResponse({"message":response['value']},response['statusCode']) 
+        ResponseFactory().create_process(response)
 
     def delete_multimedia(self, email_client: str):
         response = self.case_use.delete_multimedia(email_client)
-        if not response['success']:
-            return JSONResponse({"error":response['error']},response['statusCode'])
-        
-        return JSONResponse({"message":response['value']},response['statusCode']) 
+        ResponseFactory().create_process(response)
 
     ## part of case use find by tags -------------------------------------------------------------------
     def find_by_tag_favorite(self,email_client:str):
         response = self.case_use_find.find_by_tag_favorite(email_client)
-        if not response['success']:
-            return JSONResponse({"error":response['error']},response['statusCode'])
-        
-        return JSONResponse({"message":response['value']},response['statusCode'])
+        ResponseFactory().create_process(response)
     
     def find_by_tag_private(self,email_client:str):
         response = self.case_use_find.find_by_tag_private(email_client)
-        if not response['success']:
-            return JSONResponse({"error":response['error']},response['statusCode'])
-        
-        return JSONResponse({"message":response['value']},response['statusCode'])
+        ResponseFactory().create_process(response)
     
     def find_by_tag_deleted(self,email_client:str):
         response = self.case_use_find.find_by_tag_deleted(email_client)
-        if not response['success']:
-            return JSONResponse({"error":response['error']},response['statusCode'])
+        ResponseFactory().create_process(response)
         
-        return JSONResponse({"message":response['value']},response['statusCode'])
-    
     def find_by_tag_archived(self,email_client:str):
         response = self.case_use_find.find_by_tag_archived(email_client)
-        if not response['success']:
-            return JSONResponse({"error":response['error']},response['statusCode'])
-        
-        return JSONResponse({"message":response['value']},response['statusCode'])
+        ResponseFactory().create_process(response)
     
     
