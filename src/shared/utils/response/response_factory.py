@@ -16,13 +16,13 @@ class ResponseSuccessProcess(ResponseBuiler):
     """
     class that which represents the product of process successfully
     """
-    def __init__(self, status_code:int , value ) -> None:
+    def __init__(self, status_code:int , value:any ) -> None: # type: ignore
         self.status_code = status_code
         self.value = value 
         super().__init__()
         
     def build(self) -> JSONResponse:
-        return JSONResponse(self.value , self.status_code)   
+        return JSONResponse({"message":self.value},self.status_code)
     
 class ResponseFailureProcess(ResponseBuiler):
     """
@@ -34,7 +34,7 @@ class ResponseFailureProcess(ResponseBuiler):
         super().__init__()
         
     def build(self) -> JSONResponse:
-        return JSONResponse(self.error,self.status_code)
+        return JSONResponse({"error": self.error},self.status_code)
     
 class ResponseFactory:
     """
@@ -43,5 +43,5 @@ class ResponseFactory:
     @staticmethod
     def create_process(response):
         if response['success']:
-            return ResponseSuccessProcess(response['status_code'],response['value']).build()
-        return ResponseFailureProcess(response['status_code'],response['error']).build()
+            return ResponseSuccessProcess(response['statusCode'],response['value']).build()
+        return ResponseFailureProcess(response['statusCode'],response['error']).build()

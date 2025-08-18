@@ -14,8 +14,8 @@ class controllerUserAuth():
     
     def createUser(self,user:userDtoRegiter):
         response = self.caseUseRegister.createUser(user)
-        ResponseFactory().create_process(response) ## with desing pattern factory for reponses http
+        return ResponseFactory().create_process(response) ## with desing pattern factory for reponses http
     
     def LoginUser(self,user:userDtoLogin,):
         result = self.caseUse.createLogin(user) 
-        ResponseFactory().create_process(result)
+        return ResponseFactory().create_process(result)

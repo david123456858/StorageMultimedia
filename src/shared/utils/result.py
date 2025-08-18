@@ -1,16 +1,16 @@
 
 def SuccessProccess(statusCode:int,value):
-    response = {
+    return {
         "value": value,
         "success": True,
         "statusCode": statusCode
     }
-    return response
+   
 
 def FailureProccess(statusCode:int,error):
-    response = {
+    return {
         "error": error,
         "success": False,
         "statusCode": statusCode
     }
-    return response
+    
