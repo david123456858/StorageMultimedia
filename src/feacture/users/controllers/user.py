@@ -1,8 +1,8 @@
 from src.feacture.users.caseuse.login import caseUseUserLogin
 from src.feacture.users.caseuse.register import caseUseCreateUser
 from src.feacture.users.dtos.user import userDtoRegiter, userDtoLogin
+from src.shared.utils.response.response_factory import ResponseFactory
 
-from fastapi.responses import JSONResponse
 
 class controllerUserAuth():
     
@@ -10,18 +10,12 @@ class controllerUserAuth():
         self.caseUse = caseUseLogin
         self.caseUseRegister = caseUseRegister
         pass
+    ## AFTER DESIGN PATTERN 
     
     def createUser(self,user:userDtoRegiter):
-        response = self.caseUseRegister.createUser(user) # type: ignore
-        
-        if not response['success']:
-            return JSONResponse({"error":response['error']},response['statusCode'])
-        
-        return JSONResponse({"message":response['value']},response['statusCode']) 
+        response = self.caseUseRegister.createUser(user)
+        return ResponseFactory().create_process(response) ## with desing pattern factory for reponses http
     
     def LoginUser(self,user:userDtoLogin,):
-        result = self.caseUse.createLogin(user) # type: ignore
-        if not result['success']:
-            return JSONResponse({"error":result['error']},result['statusCode'])
-        
-        return JSONResponse({"message":result['value']},result['statusCode'])
+        result = self.caseUse.createLogin(user) 
+        return ResponseFactory().create_process(result)
