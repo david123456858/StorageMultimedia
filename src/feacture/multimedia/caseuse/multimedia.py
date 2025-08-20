@@ -21,6 +21,7 @@ class CaseUseMultimedia:
         self.repoUser = repositoryUser()
         self.cloudinaryAdapter = CloudinaryAdapter()
 
+
     async def create_multimedia(self, email_client:str ,file:UploadFile):
         try:
             user_find = self.repoUser.find_by_email(hashing_hashlib(email_client)) 
@@ -45,6 +46,8 @@ class CaseUseMultimedia:
         except Exception as e:
             return FailureProccess(500, f'Cloudinary error: {str(e)}')
 
+
+
     def get_all_multimedia(self, email_client:str,page:int,size_page:int):
         try:
             result = self.repo.find_paginated(hashing_hashlib(email_client), page ,size_page)
@@ -59,8 +62,11 @@ class CaseUseMultimedia:
         except Exception as e : 
             return FailureProccess(500,'Error internal server') 
 
+
     def get_multimedia_by_id(self, id: int):
         return self.repo.findById(id)
+
+
 
     def update_multimedia(self, public_id:str, dto: MultimediaDtoUpdate):
         try:
@@ -77,6 +83,8 @@ class CaseUseMultimedia:
             return SuccessProccess(200,'Tags updated sussefully')
         except Exception as e:   
             return FailureProccess(500,'Error internal Server') 
+        
+        
         
     def delete_multimedia(self,email_client:str):
         try:
