@@ -20,7 +20,7 @@ class handlerIdempotency(BaseHTTPMiddleware):
         
         idempotency_key = requests.headers.get('Idempotency-Key')
         if not idempotency_key:
-            return False
+            return
         
         request_key = self._decode_idempotency(requests,idempotency_key)
         response_cached = self._get_cached(request_key)
