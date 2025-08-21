@@ -37,6 +37,7 @@ class ControllerMultimedia:
         ResponseFactory().create_process(response)
 
     ## part of case use find by tags -------------------------------------------------------------------
+    ## Se puede convertir en algo mas facil
     def find_by_tag_favorite(self,email_client:str):
         response = self.case_use_find.find_by_tag_favorite(email_client)
         ResponseFactory().create_process(response)

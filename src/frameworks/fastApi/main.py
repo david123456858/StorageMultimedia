@@ -2,6 +2,8 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 
+from src.security.idempotency.idempotency_handler import handlerIdempotency
+
 # part feacture
 from src.feacture.users.entity.user import User
 from src.feacture.multimedia.entity.multimedia import Multimedia
@@ -24,6 +26,10 @@ app.add_middleware(
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
+)
+app.add_middleware(
+    handlerIdempotency,
+    ttl=60
 )
 
 # Creacion de tablas
