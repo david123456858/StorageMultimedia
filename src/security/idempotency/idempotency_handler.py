@@ -14,50 +14,37 @@ class handlerIdempotency(BaseHTTPMiddleware):
         """
         super().__init__(app)
         self.cache: Dict[str, Dict[str, Any]] = {}
+        self.cont = 0
+        self.guardadoId = ''
+        self.response_guardado = {}
+        self.statu_code = 200
         self.ttl_seconds = ttl  
         
     async def dispatch(self, request: Request, call_next) -> Response:
-        """Método principal que intercepta todas las requests"""
-        response = await self.get_idempotency(request, call_next)
-        print(response)
-        if not response:
-            return JSONResponse({"message": "mala"},400)
         
-        if isinstance(response, Response):
-            return response
+        if request.method not in ['POST']:
+            return await call_next(request)
         
-        return JSONResponse(response,200)
+        impotency_key = request.headers.get('Idempotency-Key')
         
-            
-    async def get_idempotency(self, requests: Request, call_next):
-        try:
-            if requests.method not in ["POST", "PUT", "PATCH"]:
-                return await call_next(requests)
+        if not impotency_key:
+            return JSONResponse({"Message":"Bad reques but not send hearders"},400)
         
-            idempotency_key = requests.headers.get('Idempotency-Key')
+        key_id_idempotency = await self._decode_idempotency(request,impotency_key)
         
-            if not idempotency_key:
-                return JSONResponse('pongase pilas primo',422)
+        exist_reponse = await self._get_cached(key_id_idempotency)
         
-            request_key = await self._decode_idempotency(requests, idempotency_key)
-            response_cached = await self._get_cached(request_key)
+        if exist_reponse:
+            return JSONResponse(self.response_guardado,self.statu_code)
         
-            if response_cached:
-                # response_cached is a dict with content, status_code, headers
-                return JSONResponse(content=response_cached["content"], status_code=response_cached["status_code"], headers={
-                    **response_cached.get("headers", {}),
-                    "X-Idempotency-Replayed": "true"
-                })
+        response = await call_next(request)
         
-            response = await call_next(requests)
-            print(response)
-            if 200 <= response.status_code < 300:
-                await self._add_reponse_cached(response, request_key)
-            
-            return response    
-        except Exception as e:
-            print(e)
-            
+        if 200<= response.status_code < 300:
+            await self._add_reponse_cached(response,key_id_idempotency)
+        
+        
+        return response
+          
         
     async def _decode_idempotency(self, request: Request, key_idemptency: str) -> str:
         """
@@ -68,9 +55,14 @@ class handlerIdempotency(BaseHTTPMiddleware):
         return hashlib.sha256(content_key.encode()).hexdigest()
         
     async def _get_cached(self, request_key):
-        return
+        if request_key == self.guardadoId:
+            return self.response_guardado
+        return False
         
         
     
     async def _add_reponse_cached(self, response, request_key):
+        self.guardadoId = request_key
+        print(response)
+        # self.response_guardado = response
         return
