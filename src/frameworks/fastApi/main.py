@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 
@@ -18,6 +19,7 @@ from src.config.cloudinary.config import config
 
 from src.shared.utils.encrypt.encrypt import key
 from src.shared.middleware.hanlerValidation import validation_Exception_handler
+from src.security.jwt.jwt_handler import HandleJwt,MiddlwareJWT
 
 app = FastAPI()
 
@@ -31,6 +33,9 @@ app.add_middleware(
 #     handlerIdempotency,
 #     ttl=60
 # )
+handler_jwt = HandleJwt() 
+
+app.add_middleware(BaseHTTPMiddleware,dispatch=MiddlwareJWT(handler_jwt,['/api/user/login','api/user/register']))
 
 # Creacion de tablas
 Base.metadata.create_all(bind=dataBaseTurso.get_instance())
