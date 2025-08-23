@@ -27,10 +27,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(
-    handlerIdempotency,
-    ttl=60
-)
+# app.add_middleware(
+#     handlerIdempotency,
+#     ttl=60
+# )
 
 # Creacion de tablas
 Base.metadata.create_all(bind=dataBaseTurso.get_instance())
