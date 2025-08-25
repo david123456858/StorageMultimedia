@@ -1,45 +1,68 @@
-# from fastapi import Request, HTTPException
-# from typing import Dict, Any
-# import time
-# import hashlib
-# import json
+from datetime import datetime, timedelta
+from typing import Any, Dict
+from fastapi import FastAPI, HTTPException,Request,Response
+from fastapi.responses import JSONResponse
+from starlette.middleware.base import BaseHTTPMiddleware
+import hashlib
 
-# class IdempotencyMiddleware:
-#     def __init__(self, cache_time: int = 300):  # 5 minutos por defecto
-#         self.cache_time = cache_time
-#         self.cache: Dict[str, tuple[float, Any]] = {}
+class handlerIdempotency(BaseHTTPMiddleware):
+    def __init__(self,app ,ttl:int = 10) -> None:
+        """
+        Args:
+            app: La aplicación FastAPI
+            ttl: Tiempo de vida de las entradas en segundos (por defecto 1 hora)
+        """
+        super().__init__(app)
+        self.cache: Dict[str, Dict[str, Any]] = {}
+        self.cont = 0
+        self.guardadoId = ''
+        self.response_guardado = {}
+        self.statu_code = 200
+        self.ttl_seconds = ttl  
         
-#     def _generate_idempotency_key(self, request: Request) -> str:
-#         """Genera una clave única basada en la solicitud"""
-#         body = request.body() if request.method in ['POST', 'PUT', 'PATCH'] else b''
-#         content = f"{request.method}:{request.url}:{body}"
-#         return hashlib.sha256(content.encode()).hexdigest()
+    async def dispatch(self, request: Request, call_next) -> Response:
         
-#     async def __call__(self, request: Request):
-#         if request.method not in ['POST', 'PUT', 'PATCH']:
-#             return None
-            
-#         idempotency_key = request.headers.get('X-Idempotency-Key')
-#         if not idempotency_key:
-#             return None
-            
-#         now = time.time()
+        if request.method not in ['POST']:
+            return await call_next(request)
         
-#         # Limpiar entradas antiguas
-#         self.cache = {
-#             k: v for k, v in self.cache.items()
-#             if v[0] > now - self.cache_time
-#         }
+        impotency_key = request.headers.get('Idempotency-Key')
         
-#         # Verificar si existe una respuesta en caché
-#         if idempotency_key in self.cache:
-#             timestamp, response = self.cache[idempotency_key]
-#             if timestamp > now - self.cache_time:
-#                 return response
-                
-#         return None
+        if not impotency_key:
+            return JSONResponse({"Message":"Bad reques but not send hearders"},400)
         
-#     def cache_response(self, idempotency_key: str, response: Any):
-#         """Almacena la respuesta en caché"""
-#         if idempotency_key:
-#             self.cache[idempotency_key] = (time.time(), response)
+        key_id_idempotency = await self._decode_idempotency(request,impotency_key)
+        
+        exist_reponse = await self._get_cached(key_id_idempotency)
+        
+        if exist_reponse:
+            return JSONResponse(self.response_guardado,self.statu_code)
+        
+        response = await call_next(request)
+        
+        if 200<= response.status_code < 300:
+            await self._add_reponse_cached(response,key_id_idempotency)
+        
+        
+        return response
+          
+        
+    async def _decode_idempotency(self, request: Request, key_idemptency: str) -> str:
+        """
+        De esta manera la idempotencia es unica por metodo y por tipo de informacion que viene del cuerpo
+        """
+        body = await request.body()
+        content_key = f"{request.method}:{request.url.path}:{key_idemptency}:{body.decode()}"
+        return hashlib.sha256(content_key.encode()).hexdigest()
+        
+    async def _get_cached(self, request_key):
+        if request_key == self.guardadoId:
+            return self.response_guardado
+        return False
+        
+        
+    
+    async def _add_reponse_cached(self, response, request_key):
+        self.guardadoId = request_key
+        print(response)
+        # self.response_guardado = response
+        return

@@ -10,4 +10,6 @@ gunicorn
 sqlalchemy-libsql
 bcrypt
 cryptography
-pyjwt
+jose
+redis
+python-jose[cryptography]
