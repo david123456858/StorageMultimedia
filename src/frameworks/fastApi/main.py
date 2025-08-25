@@ -35,7 +35,7 @@ app.add_middleware(
 # )
 handler_jwt = HandleJwt() 
 
-app.add_middleware(BaseHTTPMiddleware,dispatch=MiddlwareJWT(handler_jwt,['/api/user/login','api/user/register']))
+## app.add_middleware(BaseHTTPMiddleware,dispatch=MiddlwareJWT(handler_jwt,['/api/user/login','api/user/register']))
 
 # Creacion de tablas
 Base.metadata.create_all(bind=dataBaseTurso.get_instance())
