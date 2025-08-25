@@ -33,7 +33,7 @@ app.add_middleware(
 #     handlerIdempotency,
 #     ttl=60
 # )
-handler_jwt = HandleJwt() 
+##handler_jwt = HandleJwt() 
 
 ## app.add_middleware(BaseHTTPMiddleware,dispatch=MiddlwareJWT(handler_jwt,['/api/user/login','api/user/register']))
 
