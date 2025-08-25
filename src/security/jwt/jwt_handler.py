@@ -10,14 +10,14 @@ import os
 from src.shared.utils.response.response_factory import ResponseFactory
 from src.shared.utils.result import FailureProccess
 
-load_dotenv()
+##load_dotenv()
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+##SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 class HandleJwt():
     def __init__(self) -> None:
-        self.secret = os.environ.get('SECRET_KEY') 
+        self.secret =  'hola'##os.environ.get('SECRET_KEY') 
         self.algoritm = 'HS256'
         self.expire_minutes = 30
         
