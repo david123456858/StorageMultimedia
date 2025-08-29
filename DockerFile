@@ -1,13 +1,24 @@
-FROM python:3.12-slim-bookworm
+# ETAPA BASE
+FROM python:3.14.0rc2-alpine AS base
+
+WORKDIR /usr/app
+
+RUN apt-get upgrade && apt-get update \
+    python -m pip install --upgrade pip
+
+COPY . /usr/app/
+
+RUN pip install && pip wheels --no-cache-dir -r requirements.txt
+
+# ETAPA DE correr
+FROM python:3.14-slim AS runtime
+
 
 WORKDIR /app
 
-COPY ./src /app
-COPY requirements.txt /app/requirements.txt
+## RUNTIME
+COPY --from=base /wheels /wheels
 
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+RUN pip install --no-cache-dir /wheels/*
 
-EXPOSE 8000
 
-CMD [ "" ]
