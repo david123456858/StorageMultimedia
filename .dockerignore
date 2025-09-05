@@ -1,0 +1,6 @@
+env/
+env-wsl/
+__pycache__
+*.pyc
+README.md
+Dockerfile
