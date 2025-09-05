@@ -1,3 +1,6 @@
 env/
 env-wsl/
-__pycache__/
+__pycache__
+*.pyc
+README.md
+Dockerfile

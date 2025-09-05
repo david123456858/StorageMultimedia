@@ -2,12 +2,12 @@ fastapi[all]
 uvicorn
 python-dotenv
 libsql-client
+libsql-experimental
+sqlalchemy-libsql
 sqlalchemy
 pymysql
 dotenv
 cloudinary
-gunicorn 
-sqlalchemy-libsql
 bcrypt
 cryptography
 jose
