@@ -27,13 +27,16 @@ class RepositoryMultimedia:
         
     def find_paginated(self,email_client:str,page:int,size_page:int):
         return self.session.query(Multimedia)\
-            .filter(Multimedia.user_email == email_client,
-                    Multimedia.is_archived==False,
-                    Multimedia.is_deleted==False,
-                    Multimedia.is_private==False)\
-            .order_by(Multimedia.created_at)\
+            .filter(
+                Multimedia.user_email == email_client,
+                Multimedia.is_archived == False,
+                Multimedia.is_deleted == False,
+                Multimedia.is_private == False
+            )\
+            .order_by(Multimedia.created_at.desc())\
             .offset((page - 1) * size_page)\
-            .limit(size_page).all()
+            .limit(size_page)\
+            .all()
         
     def findById(self, id: int):
         return self.session.query(Multimedia).filter(Multimedia.id == id).first()

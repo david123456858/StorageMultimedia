@@ -22,6 +22,7 @@ class ResponseSuccessProcess(ResponseBuiler):
         super().__init__()
         
     def build(self) -> JSONResponse:
+        print("build",self.value)
         return JSONResponse({"message":self.value},self.status_code)
     
 class ResponseFailureProcess(ResponseBuiler):
@@ -42,6 +43,7 @@ class ResponseFactory:
     """
     @staticmethod
     def create_process(response):
+        print("llegue a factoty",response)
         if response['success']:
             return ResponseSuccessProcess(response['statusCode'],response['value']).build()
         return ResponseFailureProcess(response['statusCode'],response['error']).build()
