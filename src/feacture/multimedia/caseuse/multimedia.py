@@ -51,9 +51,7 @@ class CaseUseMultimedia:
     def get_all_multimedia(self, email_client:str,page:int,size_page:int):
         try:
             result = self.repo.find_paginated(hashing_hashlib(email_client), page ,size_page)
-            
-            data = self.cloudinaryAdapter.get_cloudinary_multimedia(result) 
-            
+            data = get_cloudinary_multimedia(result) 
             if data is Exception:
                 return FailureProccess(500,'Error of cloudinary')
             
